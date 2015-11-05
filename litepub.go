@@ -154,7 +154,9 @@ func parsePost(markdown string) post {
 
 type post struct {
 	// Plain text
-	Title   string
+	Title string
+
+	// The post's date
 	Written time.Time
 
 	// Markdown

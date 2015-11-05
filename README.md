@@ -10,7 +10,7 @@ Download a [release]():
 OS specific code (will be fixed soon).
 
 ```
-$ wget 
+$ wget
 ```
 
 Add `litepub` to the `PATH`:
@@ -73,7 +73,9 @@ Each post has the following properties:
 ```go
 type post struct {
 	// Plain text
-	Title   string
+	Title string
+
+	// The post's date
 	Written time.Time
 
 	// Markdown
@@ -134,7 +136,7 @@ The rest is the content of the post.
 > Both title and date are required.
 
 An example post taken from my
-[blog](http://mirovarga.com/building-an-event-store-in-node-js):
+[blog](http://www.mirovarga.com/building-an-event-store-in-node-js):
 
 ```markdown
 1 # Building an Event Store in Node.js
