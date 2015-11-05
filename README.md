@@ -4,13 +4,14 @@ A lightweight static blog generator written in Go.
 
 ## Quick start
 
-Download a [release]():
+Download a [release](https://github.com/mirovarga/litepub/releases):
 
 > Currently there's only a Linux release (tested on Ubuntu 14.04) because of an
 OS specific code (will be fixed soon).
 
 ```
-$ wget
+$ wget https://github.com/mirovarga/litepub/releases/download/0.1.0/litepub
+$ chmod +x litepub
 ```
 
 Add `litepub` to the `PATH`:
