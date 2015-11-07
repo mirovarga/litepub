@@ -15,7 +15,7 @@ const (
 
 // TODO make dirs overridable via command line arguments (here or at create command) (?)
 // TODO multiple templates (specify as command line arguments)
-func generate(arguments map[string]interface{}) {
+func build(arguments map[string]interface{}) {
 	blogRepo := repository.NewFSBlogRepository(".")
 	usecases := NewUsecases(blogRepo)
 

@@ -10,8 +10,7 @@ import "github.com/docopt/docopt-go"
 func main() {
 	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.1.0", false)
 
-	// TODO rename to build
-	if arguments["generate"].(bool) {
-		generate(arguments)
+	if arguments["build"].(bool) {
+		build(arguments)
 	}
 }

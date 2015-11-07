@@ -30,7 +30,7 @@ $ git clone https://github.com/mirovarga/mirovarga.com
 `cd` to the directory where you cloned the blog and run:
 
 ```
-$ litepub generate
+$ litepub build
 ```
 
 The blog will be generated to the `www` directory.
@@ -66,26 +66,10 @@ that are used by the `.tmpl` files.
 There is only one type of object - the `post`:
 
 Each post has the following properties:
-- `Title` (plain text)
-- `Written` (the post's date)
-- `Content` (Markdown)
-- `Slug` (generated from the `Title`)
-
-```go
-type post struct {
-	// Plain text
-	Title string
-
-	// The post's date
-	Written time.Time
-
-	// Markdown
-	Content string
-
-	// Generated from the title
-	Slug string
-}
-```
+- `Title` - as plain text
+- `Content` - everything except `Title` and `Written` as Markdown text
+- `Written` - the post's date
+- `Slug` - generated from the `Title`
 
 The `index.tmpl` template has access to an array of all `post`s sorted by
 `Written` in descending order.
@@ -156,7 +140,7 @@ An example post taken from my
 LitePub - a lightweight static blog generator
 
 Usage:
-  litepub generate
+  litepub build
 
 Options:
   -h, --help      Show this screen
@@ -166,7 +150,7 @@ Options:
 To generate a blog, `cd` to its directory and run:
 
 ```
-$ litepub generate
+$ litepub build
 ```
 
 The blog will be generated to the `www` directory.

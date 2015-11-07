@@ -4,7 +4,7 @@ const usage = `
 LitePub - a lightweight static blog generator
 
 Usage:
-  litepub generate
+  litepub build
 
 Options:
   -h, --help      Show this screen
