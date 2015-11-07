@@ -33,7 +33,7 @@ $ git clone https://github.com/mirovarga/mirovarga.com
 $ litepub generate
 ```
 
-The blog wil be generated to the `www` directory.
+The blog will be generated to the `www` directory.
 
 ## Documentation
 
