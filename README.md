@@ -4,36 +4,28 @@ A lightweight static blog generator written in Go.
 
 ## Quick start
 
-Download a [binary](https://github.com/mirovarga/litepub/tree/master/bin):
+1. Download a [binary](https://github.com/mirovarga/litepub/tree/master/bin).
 
-> Currently there's only a Linux x64 binary (tested on Ubuntu 14.04) because of
-an OS specific code (will be fixed soon).
+2. Add `litepub` to the `PATH`:
 
-```
-$ wget https://github.com/mirovarga/litepub/raw/master/bin/linux/x64/litepub
-$ chmod +x litepub
-```
+  ```
+  $ export PATH=$PATH:/path/to/where/you/downloaded/the/binary
+  ```
 
-Add `litepub` to the `PATH`:
-
-```
-$ export PATH=$PATH:/path/to/where/you/downloaded/the/release
-```
-
-Clone the [source of my blog](https://github.com/mirovarga/mirovarga.com) so you
+3. Clone the [source of my blog](https://github.com/mirovarga/mirovarga.com) so you
 have something to start with:
 
-```
-$ git clone https://github.com/mirovarga/mirovarga.com
-```
+  ```
+  $ git clone https://github.com/mirovarga/mirovarga.com
+  ```
 
-`cd` to the directory where you cloned the blog and run:
+4. `cd` to the directory where you cloned the blog and run:
 
-```
-$ litepub build
-```
+  ```
+  $ litepub build
+  ```
 
-The blog will be generated to the `www` directory.
+  The blog will be generated to the `www` directory.
 
 ## Documentation
 

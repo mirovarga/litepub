@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"html/template"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 
 	"github.com/gosimple/slug"
 	"github.com/russross/blackfriday"
+	"github.com/termie/go-shutil"
 
 	. "mirovarga.com/litepub"
 )
@@ -78,15 +78,24 @@ func (g StaticBlogGenerator) Generate() error {
 func (g StaticBlogGenerator) prepareOutputDir() error {
 	os.RemoveAll(g.outputDir)
 
-	// FIXME use os-independent way
-	err := exec.Command("cp", "-r", g.templatesDir, g.outputDir).Run()
+	err := shutil.CopyTree(g.templatesDir, g.outputDir,
+		&shutil.CopyTreeOptions{
+			Symlinks: true,
+			Ignore: func(src string, files []os.FileInfo) []string {
+				var ignored []string
+				for _, file := range files {
+					if strings.HasSuffix(file.Name(), ".tmpl") {
+						ignored = append(ignored, file.Name())
+					}
+				}
+				return ignored
+			},
+			CopyFunction:           shutil.Copy,
+			IgnoreDanglingSymlinks: false,
+		})
 	if err != nil {
 		return err
 	}
-
-	os.Remove(filepath.Join(g.outputDir, "layout.tmpl"))
-	os.Remove(filepath.Join(g.outputDir, "index.tmpl"))
-	os.Remove(filepath.Join(g.outputDir, "post.tmpl"))
 
 	return nil
 }
