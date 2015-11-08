@@ -135,7 +135,7 @@ The rest is the content of the post.
 > Both title and date are required.
 
 An example post taken from my
-[blog](http://www.mirovarga.com/building-an-event-store-in-node-js):
+[blog](http://www.mirovarga.com/building-an-event-store-in-node-js.html):
 
 ```markdown
 1 # Building an Event Store in Node.js
