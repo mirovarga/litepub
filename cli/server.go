@@ -19,6 +19,7 @@ func server(arguments map[string]interface{}) {
 		go func() {
 			for {
 				select {
+				// FIXME rebuilding occurs twice
 				case <-watcher.Events:
 					build(nil)
 				}
