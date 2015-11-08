@@ -7,7 +7,6 @@ const (
 	outputDir    = "www"
 )
 
-// TODO server --watch, --port
 func main() {
 	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.1.0", false)
 
@@ -15,5 +14,7 @@ func main() {
 		create(arguments)
 	} else if arguments["build"].(bool) {
 		build(arguments)
+	} else if arguments["server"].(bool) {
+		server(arguments)
 	}
 }

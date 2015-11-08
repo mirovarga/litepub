@@ -62,7 +62,7 @@ const (
   {{range .}}
     <div class="row">
       <div class="twelve columns">
-        <h4><a href="{{.Slug}}">{{.Title}}</a></h4>
+        <h4><a href="{{.Slug}}.html">{{.Title}}</a></h4>
         {{.Content | summary | html}}
       </div>
     </div>

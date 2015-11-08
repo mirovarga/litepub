@@ -12,13 +12,20 @@ A lightweight static blog generator written in Go.
   $ litepub create
   ```
 
-3. `cd` to the `litepub-blog` directory and run:
+3. Build the blog:
 
   ```
+  $ cd litepub-blog
   $ ../litepub build
   ```
 
-  The blog will be generated to the `www` directory.
+4. Run the built-in server:
+
+  ```
+  $ ../litepub server
+  ```
+
+5. Open [http://localhost:2703](http://localhost:2703) in your browser
 
 ## Documentation
 
@@ -127,12 +134,15 @@ LitePub - a lightweight static blog generator
 Usage:
   litepub create [<name>] [-b, --blank]
   litepub build
+  litepub server [-p, --port <port>]
 
 Arguments:
-  <name>          Name of the blog [default: litepub-blog]
+  <name>             Name of the blog [default: litepub-blog]
 
 Options:
-  -b, --blank     Don't create sample posts and templates
-  -h, --help      Show this screen
-  -v, --version   Show version
+  -b, --blank        Don't create sample posts and templates
+  -p, --port <port>  The port to listen on [default: 2703]
+  -h, --help         Show this screen
+  -v, --version      Show version
+
 ```
