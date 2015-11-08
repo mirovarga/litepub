@@ -19,7 +19,7 @@ func server(arguments map[string]interface{}) {
 		go func() {
 			for {
 				select {
-				case _ = <-watcher.Events:
+				case <-watcher.Events:
 					build(nil)
 				}
 			}
