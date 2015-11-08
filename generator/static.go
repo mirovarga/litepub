@@ -81,14 +81,8 @@ func (g StaticBlogGenerator) prepareOutputDir() error {
 	err := shutil.CopyTree(g.templatesDir, g.outputDir,
 		&shutil.CopyTreeOptions{
 			Symlinks: true,
-			Ignore: func(src string, files []os.FileInfo) []string {
-				var ignored []string
-				for _, file := range files {
-					if strings.HasSuffix(file.Name(), ".tmpl") {
-						ignored = append(ignored, file.Name())
-					}
-				}
-				return ignored
+			Ignore: func(string, []os.FileInfo) []string {
+				return []string{"layout.tmpl", "index.tmpl", "post.tmpl"}
 			},
 			CopyFunction:           shutil.Copy,
 			IgnoreDanglingSymlinks: false,
