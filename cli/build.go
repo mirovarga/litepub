@@ -8,11 +8,6 @@ import (
 	"mirovarga.com/litepub/repository"
 )
 
-const (
-	templatesDir = "templates"
-	outputDir    = "www"
-)
-
 // TODO make dirs overridable via command line arguments (here or at create command) (?)
 // TODO multiple templates (specify as command line arguments)
 func build(arguments map[string]interface{}) {

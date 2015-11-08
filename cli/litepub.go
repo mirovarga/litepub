@@ -2,14 +2,18 @@ package main
 
 import "github.com/docopt/docopt-go"
 
-// TODO server --watch, --port
-// TODO create <name=litepub-blog> --empty
-// TODO sample blog with templates and posts dirs in releases
+const (
+	templatesDir = "templates"
+	outputDir    = "www"
+)
 
+// TODO server --watch, --port
 func main() {
 	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.1.0", false)
 
-	if arguments["build"].(bool) {
+	if arguments["create"].(bool) {
+		create(arguments)
+	} else if arguments["build"].(bool) {
 		build(arguments)
 	}
 }

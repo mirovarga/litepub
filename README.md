@@ -6,23 +6,16 @@ A lightweight static blog generator written in Go.
 
 1. Download a [binary](https://github.com/mirovarga/litepub/tree/master/bin).
 
-2. Add `litepub` to the `PATH`:
+2. Create a sample blog:
 
   ```
-  $ export PATH=$PATH:/path/to/where/you/downloaded/the/binary
+  $ litepub create
   ```
 
-3. Clone the [source of my blog](https://github.com/mirovarga/mirovarga.com) so you
-have something to start with:
+3. `cd` to the `litepub-blog` directory and run:
 
   ```
-  $ git clone https://github.com/mirovarga/mirovarga.com
-  ```
-
-4. `cd` to the directory where you cloned the blog and run:
-
-  ```
-  $ litepub build
+  $ ../litepub build
   ```
 
   The blog will be generated to the `www` directory.
@@ -132,17 +125,14 @@ An example post taken from my
 LitePub - a lightweight static blog generator
 
 Usage:
+  litepub create [<name>] [-b, --blank]
   litepub build
 
+Arguments:
+  <name>          Name of the blog [default: litepub-blog]
+
 Options:
+  -b, --blank     Don't create sample posts and templates
   -h, --help      Show this screen
   -v, --version   Show version
 ```
-
-To generate a blog, `cd` to its directory and run:
-
-```
-$ litepub build
-```
-
-The blog will be generated to the `www` directory.
