@@ -4,35 +4,21 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-fsnotify/fsnotify"
+	"gopkg.in/fsnotify.v1"
 )
 
 const defaultPort = "2703"
 
 func server(arguments map[string]interface{}) {
-	watch := arguments["--watch"].(int)
-
-	if watch == 1 {
-		watcher, _ := fsnotify.NewWatcher()
-		defer watcher.Close()
-
-		go func() {
-			for {
-				select {
-				// FIXME rebuilding occurs twice
-				case <-watcher.Events:
-					build(nil)
-				}
-			}
-		}()
-
-		watcher.Add(postsDir)
-		watcher.Add(templatesDir)
-	}
-
 	port, ok := arguments["--port"].([]string)
 	if !ok {
 		port[0] = defaultPort
+	}
+
+	watch := arguments["--watch"].(int)
+
+	if watch == 1 {
+		go watchDirs()
 	}
 
 	fmt.Printf("Running on http://localhost:%s\n", port[0])
@@ -42,4 +28,19 @@ func server(arguments map[string]interface{}) {
 	fmt.Println("Ctrl+C to quit")
 
 	http.ListenAndServe(":"+port[0], http.FileServer(http.Dir(outputDir)))
+}
+
+func watchDirs() {
+	watcher, _ := fsnotify.NewWatcher()
+	defer watcher.Close()
+
+	watcher.Add(postsDir)
+	watcher.Add(templatesDir)
+
+	for {
+		select {
+		case <-watcher.Events:
+			build(nil)
+		}
+	}
 }
