@@ -3,6 +3,7 @@ package main
 import "github.com/docopt/docopt-go"
 
 const (
+	postsDir     = "posts"
 	templatesDir = "templates"
 	outputDir    = "www"
 )
