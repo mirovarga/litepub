@@ -158,4 +158,4 @@ architecture. For example, that's the reason why the CLI source is under
 the `adapters` directory.
 
 There's a thorough post about
-[applying the architecture in GO](http://manuel.kiessling.net/2012/09/28/applying-the-clean-architecture-to-go-applications/).
+[applying the architecture in Go](http://manuel.kiessling.net/2012/09/28/applying-the-clean-architecture-to-go-applications/).
