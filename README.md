@@ -147,3 +147,15 @@ An example post taken from my
 7 I decided to build a simple event store in Node.js.
 8 ...
 ```
+
+## Implementation notes
+
+The project tries to apply
+the [hexagonal](http://alistair.cockburn.us/Hexagonal+architecture),
+aka [clean](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html),
+aka [onion](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)
+architecture. For example, that's the reason why the CLI source is under
+the `adapters` directory.
+
+There's a thorough post about
+[applying the architecture in GO](http://manuel.kiessling.net/2012/09/28/applying-the-clean-architecture-to-go-applications/).
