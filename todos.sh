@@ -1,7 +1,3 @@
 #!/bin/sh
 
-OPTIONS="-RnI --exclude=`basename "$0"` --exclude-dir=.git --color=auto"
-
-grep $OPTIONS 'TODO' .
-grep $OPTIONS 'FIXME' .
-grep $OPTIONS 'XXX' .
+grep -IRn --exclude=`basename "$0"` --exclude-dir=.git --color=auto 'TODO\|FIXME\|XXX' .
