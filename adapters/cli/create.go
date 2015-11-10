@@ -107,8 +107,12 @@ func create(arguments map[string]interface{}) {
 
 	os.Mkdir(filepath.Join(name, templatesDir), 0700)
 
-	if arguments["--blank"].(int) == 0 {
-		dir := filepath.Join(name, templatesDir)
+	dir := filepath.Join(name, templatesDir)
+	if arguments["--blank"].(int) == 1 {
+		writeTemplate(filepath.Join(dir, "layout.tmpl"), "")
+		writeTemplate(filepath.Join(dir, "index.tmpl"), "")
+		writeTemplate(filepath.Join(dir, "post.tmpl"), "")
+	} else {
 		writeTemplate(filepath.Join(dir, "layout.tmpl"), layoutTemplate)
 		writeTemplate(filepath.Join(dir, "index.tmpl"), indexTemplate)
 		writeTemplate(filepath.Join(dir, "post.tmpl"), postTemplate)
