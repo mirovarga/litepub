@@ -4,7 +4,7 @@ A lightweight static blog generator written in Go.
 
 ## Quick start
 
-1. Download a [binary](https://github.com/mirovarga/litepub/tree/master/bin).
+1. Download a [release](https://github.com/mirovarga/litepub/releases).
 
 2. Create a sample blog:
 
