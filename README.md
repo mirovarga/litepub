@@ -2,6 +2,10 @@
 
 A lightweight static blog generator written in Go.
 
+> Why another one? I wrote a
+[blog post](http://www.mirovarga.com/a-lightweight-static-blog-generator-in-go.html)
+that briefly describes it.
+
 ## Quick Start
 
 1. Download a [release](https://github.com/mirovarga/litepub/releases).
