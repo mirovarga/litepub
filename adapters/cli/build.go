@@ -7,9 +7,9 @@ import (
 	"mirovarga.com/litepub/adapters"
 )
 
-// TODO make dirs overridable via command line arguments (here or at create command) (?)
 // TODO multiple templates (specify as command line arguments)
-// TODO -z, --zip [<path>]  Zip the www directory to the archive defined by path [default: www.zip]
+// TODO -o, --output <dir>  Generate the blog to the specified directory [default: www]
+// TODO -z, --zip [<file>]  Zip the <dir> directory to an archive [default: <dir>.zip]
 func build(arguments map[string]interface{}) {
 	blogRepo := adapters.NewFSBlogRepository(".")
 	readers := NewReaders(blogRepo)
