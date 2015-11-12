@@ -2,7 +2,7 @@
 
 A lightweight static blog generator written in Go.
 
-## Quick start
+## Quick Start
 
 1. Download a [release](https://github.com/mirovarga/litepub/releases).
 
@@ -15,7 +15,7 @@ A lightweight static blog generator written in Go.
 3. Build the blog:
 
   ```
-  $ cd litepub-blog
+  $ cd litepub-blog    
   $ ../litepub build
   ```
 
@@ -25,7 +25,7 @@ A lightweight static blog generator written in Go.
   $ ../litepub server
   ```
 
-5. Open [http://localhost:2703](http://localhost:2703) in your browser
+5. Open [http://localhost:2703](http://localhost:2703) in your browser.
 
 ## Usage
 
@@ -51,7 +51,7 @@ Options:
 
 ## Documentation
 
-### How it works
+### How It Works
 
 LitePub takes the `*.tmpl` files from the `templates` directory, applies them to
 posts stored in the `posts` directory and generates the blog to the `www`
@@ -98,21 +98,21 @@ to a generated one.
 Both the `index.tmpl` and `post.tmpl` templates have access to the following
 functions:
 
-##### html
+##### `html`
 
 Converts a Markdown string to a raw HTML, for example `{{.Content | html}}`.
 
-##### summary
+##### `summary`
 
 Extracts the first paragraph of a Markdown string that isn't a header (doesn't
 start with a `#`), for example `{{.Content | summary | html}}`.
 
-##### even
+##### `even`
 
 Returns `true` if an integer is even, for example
 `{{if even $i}}<divclass="row">{{end}}`.
 
-##### inc
+##### `inc`
 
 Increments an integer by one, for example
 `{{if or (eq (inc $i) $l) (not (even $i))}}</div>{{end}}`.
@@ -148,7 +148,7 @@ An example post taken from my
 8 ...
 ```
 
-## Implementation notes
+## Implementation Notes
 
 The project tries to apply
 the [hexagonal](http://alistair.cockburn.us/Hexagonal+architecture),
