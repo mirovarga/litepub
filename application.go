@@ -26,12 +26,25 @@ func (a Authors) CreateBlog(id string) error {
 //
 // If the Blog with the ID doesn't exist it returns an error.
 func (a Authors) CreatePost(id, title, content string, written time.Time) error {
+	return a.createPost(id, title, content, written, false)
+}
+
+// CreateDraftPost creates a Post, sets its Draft to true and adds it to the
+// Blog with the ID.
+//
+// If the Blog with the ID doesn't exist it returns an error.
+func (a Authors) CreateDraftPost(id, title, content string, written time.Time) error {
+	return a.createPost(id, title, content, written, true)
+}
+
+func (a Authors) createPost(id, title, content string, written time.Time,
+	draft bool) error {
 	blog, err := a.blogRepository.FindByID(id)
 	if err != nil {
 		return err
 	}
 
-	blog.Posts = append(blog.Posts, Post{title, content, written})
+	blog.Posts = append(blog.Posts, Post{title, content, written, draft})
 	return a.blogRepository.Store(blog)
 }
 

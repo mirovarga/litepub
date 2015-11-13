@@ -13,24 +13,35 @@ import (
 	"github.com/gosimple/slug"
 )
 
-const postsDir = "posts"
+const (
+	postsDir = "posts"
+	draftDir = "draft"
+)
 
 // FSBlogRepository stores Blogs on the file system.
 //
-// Blogs are stored as subdirectories of the main directory. The subdirectories
-// are named after the IDs of the Blogs they contain. Posts are stored as Markdown
-// files in the 'posts' subdirectory of their Blog directory.
+// Blogs are stored as subdirectories of the root directory and are named after
+// the IDs of the Blogs they contain. Posts are stored as Markdown files in the
+// posts subdirectory of their respective Blog directory. And finally, draft
+// posts (ones with Draft set to true) are stored in the draft subdirectory of
+// the respective posts directory.
 //
 // So the structure looks like this:
 //
-// main directory, fe. blogs
-// 	 blog1
-//     posts
+// root directory, for example blogs/
+// 	 blog1/
+//     posts/
+//       draft/
+//         draft1.md
+//         ...
 //       post1.md
 //       post2.md
 //       ...
-//   blog2
-//     posts
+//   blog2/
+//     posts/
+//       draft/
+//         draft1.md
+//         ...
 //       post1.md
 //       post2.md
 //       ...
@@ -42,9 +53,7 @@ type FSBlogRepository struct {
 // Store adds or updates a Blog in the repository. It creates all necessary
 // directories if needed.
 func (r FSBlogRepository) Store(blog Blog) error {
-	blogDir := filepath.Join(r.dir, blog.ID)
-	os.MkdirAll(blogDir, 0700)
-	os.Mkdir(filepath.Join(blogDir, postsDir), 0700)
+	os.MkdirAll(filepath.Join(r.dir, blog.ID, postsDir, draftDir), 0700)
 
 	for _, post := range blog.Posts {
 		err := r.writePost(blog.ID, post)
@@ -61,43 +70,75 @@ func (r FSBlogRepository) Store(blog Blog) error {
 // If the Blog isn't in the repository it returns an error.
 func (r FSBlogRepository) FindByID(id string) (Blog, error) {
 	blogDir := filepath.Join(r.dir, id)
-
 	if _, err := os.Stat(blogDir); err != nil {
 		return Blog{}, fmt.Errorf("Blog not found: %s", id)
 	}
 
-	postFiles, err := ioutil.ReadDir(filepath.Join(blogDir, postsDir))
+	postsPath := filepath.Join(blogDir, postsDir)
+	posts, err := r.readPosts(postsPath)
 	if err != nil {
-		return Blog{}, fmt.Errorf("Failed to read posts: %s", err)
+		return Blog{}, err
+	}
+
+	draftsPath := filepath.Join(postsPath, draftDir)
+	drafts, err := r.readPosts(draftsPath)
+	if err != nil {
+		return Blog{}, err
 	}
 
 	blog := Blog{ID: id}
-	for _, postFile := range postFiles {
-		post, err := r.readPost(id, postFile.Name())
-		if err != nil {
-			return Blog{}, err
-		}
-		blog.Posts = append(blog.Posts, post)
+	blog.Posts = posts
+	for _, draft := range drafts {
+		draft.Draft = true
+		blog.Posts = append(blog.Posts, draft)
 	}
 
 	return blog, nil
 }
 
 func (r FSBlogRepository) writePost(id string, post Post) error {
-	data := fmt.Sprintf("# %s\n\n*%s*\n\n%s\n",
-		post.Title, post.Written.Format("Jan 2, 2006"), post.Content)
-	return ioutil.WriteFile(filepath.Join(r.dir, id, postsDir,
-		slug.Make(post.Title)+".md"), []byte(data), 0600)
+	path := filepath.Join(r.dir, id, postsDir)
+	if post.Draft {
+		path = filepath.Join(path, draftDir)
+	}
+	path = filepath.Join(path, slug.Make(post.Title)+".md")
+
+	data := fmt.Sprintf("# %s\n\n*%s*\n\n%s\n", post.Title,
+		post.Written.Format("Jan 2, 2006"), post.Content)
+
+	return ioutil.WriteFile(path, []byte(data), 0600)
 }
 
-func (r FSBlogRepository) readPost(id, fileName string) (Post, error) {
-	markdown, err := ioutil.ReadFile(filepath.Join(r.dir, id, postsDir, fileName))
+func (r FSBlogRepository) readPosts(dir string) ([]Post, error) {
+	postFiles, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return []Post{}, fmt.Errorf("Failed to read posts: %s", err)
+	}
+
+	var posts []Post
+	for _, postFile := range postFiles {
+		if postFile.IsDir() {
+			continue
+		}
+
+		post, err := r.readPost(filepath.Join(dir, postFile.Name()))
+		if err != nil {
+			return []Post{}, err
+		}
+		posts = append(posts, post)
+	}
+	return posts, nil
+}
+
+func (r FSBlogRepository) readPost(path string) (Post, error) {
+	markdown, err := ioutil.ReadFile(path)
 	if err != nil {
 		return Post{}, fmt.Errorf("Failed to read post: %s", err)
 	}
 
 	lines := strings.Split(string(markdown), "\n\n")
 
+	// FIXME don't assume there are any lines
 	title := strings.TrimSpace(strings.Replace(lines[0], "#", "", -1))
 
 	written, err := time.Parse("*Jan 2, 2006*", lines[1])
@@ -107,7 +148,7 @@ func (r FSBlogRepository) readPost(id, fileName string) (Post, error) {
 
 	content := strings.Join(lines[2:], "\n\n")
 
-	return Post{title, content, written}, nil
+	return Post{title, content, written, false}, nil
 }
 
 // NewFSBlogRepository creates a FSBlogRepository in the provided directory. If

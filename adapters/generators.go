@@ -20,6 +20,7 @@ import (
 type ProgressFunc func(fileName string)
 
 // StaticBlogGenerator generates Blogs to static HTML files.
+// TODO add docs from README
 type StaticBlogGenerator struct {
 	id            string
 	templatesDir  string
@@ -75,7 +76,7 @@ func (g StaticBlogGenerator) generateIndex() error {
 		return err
 	}
 
-	templatePosts := toTemplatePosts(blog.Posts...)
+	templatePosts := toTemplatePosts(blog.NonDraftPosts()...)
 	sort.Sort(sortedTemplatePosts(templatePosts))
 	return g.generatePage(g.indexTemplate, "index.html", templatePosts)
 }
@@ -86,7 +87,7 @@ func (g StaticBlogGenerator) generatePosts() error {
 		return err
 	}
 
-	for _, post := range blog.Posts {
+	for _, post := range blog.NonDraftPosts() {
 		templatePost := toTemplatePosts(post)[0]
 		err = g.generatePage(g.postTemplate, templatePost.Slug+".html", templatePost)
 		if err != nil {
