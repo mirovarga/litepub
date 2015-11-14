@@ -24,7 +24,7 @@ func server(arguments map[string]interface{}) {
 
 	fmt.Printf("Running on http://localhost:%s\n", port[0])
 	if watch == 1 {
-		fmt.Println("Auto rebuilding when posts or templates change")
+		fmt.Println("Rebuilding when posts or templates change")
 	}
 	fmt.Println("Ctrl+C to quit")
 
