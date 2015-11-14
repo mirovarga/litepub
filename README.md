@@ -224,7 +224,7 @@ etc. files that are used by the `.tmpl` files.
 
 There is only one type of object - the `post`:
 
-Each post has the following properties:
+Each `post` has the following properties:
 - `Title` - as plain text
 - `Content` - everything except `Title` and `Written` as Markdown text
 - `Written` - the post's date
