@@ -137,8 +137,10 @@ func (r FSBlogRepository) readPost(path string) (Post, error) {
 	}
 
 	lines := strings.Split(string(markdown), "\n\n")
+	if len(lines) < 3 {
+		return Post{}, fmt.Errorf("Title, date or content is missing: %s", path)
+	}
 
-	// FIXME don't assume there are any lines
 	title := strings.TrimSpace(strings.Replace(lines[0], "#", "", -1))
 
 	written, err := time.Parse("*Jan 2, 2006*", lines[1])
