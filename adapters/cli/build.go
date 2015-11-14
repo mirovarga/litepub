@@ -19,7 +19,7 @@ func build(arguments map[string]interface{}) {
 			fmt.Printf("Generating: %s\n", fileName)
 		}, readers)
 	if err != nil {
-		fmt.Printf("Failed to create static generator: %s\n", err)
+		fmt.Printf("Failed to create generator: %s\n", err)
 		return
 	}
 

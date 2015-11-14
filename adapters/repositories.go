@@ -145,7 +145,7 @@ func (r FSBlogRepository) readPost(path string) (Post, error) {
 
 	written, err := time.Parse("*Jan 2, 2006*", lines[1])
 	if err != nil {
-		return Post{}, fmt.Errorf("Failed to parse post date: %s", err)
+		return Post{}, fmt.Errorf("Failed to parse date: %s", err)
 	}
 
 	content := strings.Join(lines[2:], "\n\n")
