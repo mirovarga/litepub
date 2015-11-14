@@ -88,7 +88,7 @@ www/            # the generated HTML files (plus copied accompanying files)
 
 ### Creating Posts
 
-To create a post just add a [Markdown](http://daringfireball.net/projects/markdown/)
+To create a post just add a [Markdown](https://en.wikipedia.org/wiki/Markdown)
 file in the `posts` directory. The file name and extension aren't important,
 only the content of the file.
 
@@ -125,7 +125,7 @@ of the `posts` directory. To unmark it just move it back to the `posts` director
 > Deleting a post is analogous to drafting: just remove it from the `posts`
 directory.
 
-### Generating HTML files for a Blog, aka Building a Blog
+### Generating HTML Files for a Blog, aka Building a Blog
 
 To generate the HTML files for a blog `cd` to the blog's directory and use the
 `build` command:
