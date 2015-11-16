@@ -2,9 +2,35 @@
 
 A lightweight static blog generator written in Go.
 
-> Why another one? I wrote a
-[blog post](http://www.mirovarga.com/a-lightweight-static-blog-generator-in-go.html)
-that briefly describes it.
+> Why another one? I wrote a blog post that briefly describes
+[why I created it](http://www.mirovarga.com/a-lightweight-static-blog-generator-in-go.html).
+
+## Overview
+
+LitePub is a static blog generator that tries to be as easy to use as possible.
+
+It requires no software dependencies, needs no configuration files, uses no
+databases. All it needs is one binary, posts written in
+[Markdown](https://en.wikipedia.org/wiki/Markdown) and a set of templates to
+render the posts to static HTML files.
+
+Posts don't have to include any special metadata like title or date in them;
+of course they do have titles, dates and optionally tags but they flow naturally
+and posts thus look like posts on their own.
+
+```markdown
+# How I Switched from Java to JavaScript
+
+*Jan 25, 2015*
+
+*Java, JavaScript*
+
+I know that there are lots of posts about why JavaScript, or more specifically
+Node.js, is better than Java but nevertheless I wanted to contribute, too.
+```
+
+LitePub supports tagging posts, draft posts and provides a built-in HTTP server
+that can rebuild a blog on the fly when its posts or templates change.
 
 ## Quick Start
 
@@ -25,6 +51,7 @@ unpack it to a directory.
   $ cd litepub-blog    
   $ ../litepub build
   Generating: index.html
+  Generating: tags/litepub.html
   Generating: welcome-to-litepub.html
   ```
 
@@ -83,6 +110,7 @@ templates/      # the templates and accompanying files (html, css, js, png, etc.
   layout.tmpl
   index.tmpl
   post.tmpl
+  tag.tmpl
 www/            # the generated HTML files (plus copied accompanying files)
 ```
 
@@ -96,26 +124,27 @@ only the content of the file.
 subdirectories in the `posts` directory are ignored when looking for posts.
 
 Each post looks like this (it's an
-[actual post](http://www.mirovarga.com/building-an-event-store-in-node-js.html)
+[actual post](http://www.mirovarga.com/how-i-switched-from-java-to-javascript.html)
 from my blog):
 
 ```markdown
-1 # Building an Event Store in Node.js
+1 # How I Switched from Java to JavaScript
 2
-3 *Jan 21, 2015*
+3 *Jan 25, 2015*
 4
-5 As I quite like the idea of
-6 [event sourcing](http://docs.geteventstore.com/introduction/event-sourcing-basics)
-7 I decided to build a simple event store in Node.js.
-8 ...
+5 *Java, JavaScript*
+6
+7 I know that there are lots of posts about why JavaScript, or more specifically
+8 Node.js, is better than Java but nevertheless I wanted to contribute, too.
 ```
 
 - Line `1` is the post's title. If it starts with one or more `#`s they are
-stripped. So in this case the title becomes *Building an Event Store in Node.js*.
+stripped. So in this case the title becomes *How I Switched from Java to JavaScript*.
 - Line `3` is the post's date. It has to be in the `*MMM d, YYYY*` format.
-- The rest is the content of the post.
+- Line `5` are comma separated post tags.
+- Anything below line `6` is the content of the post.
 
-> Both the post's title and date are required.
+> The post's title and date are required. Tags are optional.
 
 #### Draft Posts
 
@@ -133,6 +162,7 @@ To generate the HTML files for a blog `cd` to the blog's directory and use the
 ```
 $ litepub build
 Generating: index.html
+Generating: tags/litepub.html
 Generating: welcome-to-litepub.html
 ```
 
@@ -143,10 +173,10 @@ posts stored in the `posts` directory and generates the HTML files to the `www`
 directory. It also copies all accompanying files (and directories) from
 the `templates` directory to the `www` directory.
 
-> The generated HTML files' names are created by slugifying the post title and
-adding the `html` extension. For example, a post with the
-*Building an Event Store in Node.js* title is generated to the
-`building-an-event-store-in-node-js.html` file.
+> The generated HTML file names are created by slugifying the post title (or
+the tag name when generating tag pages) and adding the `html` extension. For
+example, a post with the *How I Switched from Java to JavaScript* title is
+generated to the `how-i-switched-from-java-to-javascript.html` file.
 
 ### Serving a Blog
 
@@ -203,41 +233,58 @@ package to define the templates.
 > If you're not familiar with the Go `html/template` package, some things in
 the next sections can be unclear.
 
-There are three required files in the `templates` directory:
+There are four required files in the `templates` directory:
 
 ```sh
 templates/      # the templates and accompanying files (html, css, js, png, etc.)
   layout.tmpl
   index.tmpl
   post.tmpl
+  tag.tmpl
 ```
 
-- `layout.tmpl` defines the common layout for both the home page (`index.tmpl`)
-and post pages (`post.tmpl`)
-- `index.tmpl` is used to generate the home page (`index.html`)
-- and `post.tmpl` is used to generate post pages
+- `layout.tmpl` defines the common layout for the home page (`index.tmpl`), post
+   pages (`post.tmpl`) and tag pages (`tag.tmpl`)
+- `index.tmpl` is used when generating the home page (`index.html`)
+- `post.tmpl` is used when generating post pages
+- and `tag.tmpl` is used when generating tag pages
 
-Besides the three files there can be any number of `html`, `css`, `js`, `png`,
+Besides the four files there can be any number of `html`, `css`, `js`, `png`,
 etc. files that are used by the `.tmpl` files.
 
-#### Objects
+#### Data
 
-There is only one type of object - the `post`:
+Templates have access to data they are meant to display. There are two types of
+data: `post`s and `tag`s.
 
-Each `post` has the following properties:
-- `Title` - as plain text
-- `Content` - everything except `Title` and `Written` as Markdown text
+A `post` has the following properties:
+
+- `Title` - the post title
+- `Content` - the content of the post as Markdown text
 - `Written` - the post's date
-- `Slug` - generated from the `Title`
+- `Tags` - an array of tags the post is tagged with (can be empty)
+- `Draft` - `true` if the post is a draft
 
-The `index.tmpl` template has access to an array of all `post`s sorted by
-`Written` in descending order. The `post.tmpl` template has access to the `post`
-it represents.
+> To get a post's page URL in a template use the `slug` function (described
+below) like this: `<a href="/{{.Title | slug}}.html">A Post</a>`.
+
+A `tag` has the following properties:
+
+- `Name` - the tag name
+- `Posts` - an array of `post`s that are tagged with the tag sorted by `Written`
+  in descending order
+
+> To get a tag's page URL in a template use the `slug` function (described
+below) like this: `<a href="/tags/{{.Name | slug}}.html">A Tag</a>`.
+
+The `index.tmpl` template has access to an array of `post`s sorted by `Written`
+in descending order. The `post.tmpl` template has access to the `post` it
+displays. The `tag.tmpl` template has access to the `tag` it displays.
 
 #### Functions
 
-Both the `index.tmpl` and `post.tmpl` templates have access to the following
-functions:
+The `index.tmpl`, `post.tmpl` and `tag.tmpl` templates have access to
+the following functions:
 
 ##### `html`
 
@@ -257,6 +304,10 @@ Returns `true` if an integer is even, for example
 
 Increments an integer by one, for example
 `{{if or (eq (inc $i) $l) (not (even $i))}}</div>{{end}}`.
+
+##### `slug`
+
+Slugifies a string, for example `<a href="/{{.Title | slug}}.html">A Post</a>`.
 
 > The available functions represent my needs when converting my handmade blog
 to a generated one.

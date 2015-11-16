@@ -5,19 +5,19 @@ import (
 	"html/template"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 
 	"github.com/gosimple/slug"
 	"github.com/russross/blackfriday"
 	"github.com/termie/go-shutil"
 
-	. "mirovarga.com/litepub"
+	"mirovarga.com/litepub/application"
+	"mirovarga.com/litepub/domain"
 )
 
 // ProgressFunc is used to monitor progress of generating a Blog. It is called
 // before a file generation is started.
-type ProgressFunc func(fileName string)
+type ProgressFunc func(path string)
 
 // StaticBlogGenerator generates Blogs to static HTML files.
 // TODO add docs from README
@@ -26,9 +26,12 @@ type StaticBlogGenerator struct {
 	templatesDir  string
 	outputDir     string
 	progressFunc  ProgressFunc
-	readers       Readers
+	readers       application.Readers
 	indexTemplate *template.Template
 	postTemplate  *template.Template
+	tagTemplate   *template.Template
+	posts         []domain.Post
+	postsByTag    map[string][]domain.Post
 }
 
 // Generate generates a Blog to static HTML files.
@@ -38,9 +41,19 @@ func (g StaticBlogGenerator) Generate() error {
 		return fmt.Errorf("Failed to prepare output directory: %s", err)
 	}
 
+	err = g.readPosts()
+	if err != nil {
+		return fmt.Errorf("Failed to read posts: %s", err)
+	}
+
 	err = g.generateIndex()
 	if err != nil {
 		return fmt.Errorf("Failed to generate index: %s", err)
+	}
+
+	err = g.generateTags()
+	if err != nil {
+		return fmt.Errorf("Failed to generate tags: %s", err)
 	}
 
 	err = g.generatePosts()
@@ -58,7 +71,7 @@ func (g StaticBlogGenerator) prepareOutputDir() error {
 		&shutil.CopyTreeOptions{
 			Symlinks: true,
 			Ignore: func(string, []os.FileInfo) []string {
-				return []string{"layout.tmpl", "index.tmpl", "post.tmpl"}
+				return []string{"layout.tmpl", "index.tmpl", "post.tmpl", "tag.tmpl"}
 			},
 			CopyFunction:           shutil.Copy,
 			IgnoreDanglingSymlinks: false,
@@ -67,29 +80,48 @@ func (g StaticBlogGenerator) prepareOutputDir() error {
 		return err
 	}
 
+	os.Mkdir(filepath.Join(g.outputDir, "tags"), 0700)
+
+	return nil
+}
+
+func (g *StaticBlogGenerator) readPosts() error {
+	blog, err := g.readers.GetBlog(g.id)
+	if err != nil {
+		return err
+	}
+
+	g.posts = blog.PostsByDate(false, false)
+
+	for _, tag := range blog.Tags(false) {
+		g.postsByTag[tag] = blog.PostsByDate(false, false, tag)
+	}
+
 	return nil
 }
 
 func (g StaticBlogGenerator) generateIndex() error {
-	blog, err := g.readers.GetBlog(g.id)
-	if err != nil {
-		return err
-	}
-
-	templatePosts := toTemplatePosts(blog.NonDraftPosts()...)
-	sort.Sort(sortedTemplatePosts(templatePosts))
-	return g.generatePage(g.indexTemplate, "index.html", templatePosts)
+	return g.generatePage(g.indexTemplate, "index.html", g.posts)
 }
 
 func (g StaticBlogGenerator) generatePosts() error {
-	blog, err := g.readers.GetBlog(g.id)
-	if err != nil {
-		return err
+	for _, post := range g.posts {
+		err := g.generatePage(g.postTemplate, slug.Make(post.Title)+".html", post)
+		if err != nil {
+			return err
+		}
 	}
 
-	for _, post := range blog.NonDraftPosts() {
-		templatePost := toTemplatePosts(post)[0]
-		err = g.generatePage(g.postTemplate, templatePost.Slug+".html", templatePost)
+	return nil
+}
+
+func (g StaticBlogGenerator) generateTags() error {
+	for tag, posts := range g.postsByTag {
+		err := g.generatePage(g.tagTemplate,
+			filepath.Join("tags", slug.Make(tag)+".html"), struct {
+				Name  string
+				Posts []domain.Post
+			}{tag, posts})
 		if err != nil {
 			return err
 		}
@@ -99,10 +131,10 @@ func (g StaticBlogGenerator) generatePosts() error {
 }
 
 func (g StaticBlogGenerator) generatePage(template *template.Template,
-	fileName string, data interface{}) error {
-	g.progressFunc(fileName)
+	path string, data interface{}) error {
+	g.progressFunc(path)
 
-	pageFile, err := os.OpenFile(filepath.Join(g.outputDir, fileName),
+	pageFile, err := os.OpenFile(filepath.Join(g.outputDir, path),
 		os.O_CREATE|os.O_WRONLY, 0600)
 	if err != nil {
 		return err
@@ -116,7 +148,7 @@ func (g StaticBlogGenerator) generatePage(template *template.Template,
 // with the ID to static HTML files in the outputDir using templates from
 // the templatesDir.
 func NewStaticBlogGenerator(id, templatesDir, outputDir string,
-	readers Readers) (StaticBlogGenerator, error) {
+	readers application.Readers) (StaticBlogGenerator, error) {
 	return NewStaticBlogGeneratorWithProgress(id, templatesDir, outputDir, nil, readers)
 }
 
@@ -125,55 +157,36 @@ func NewStaticBlogGenerator(id, templatesDir, outputDir string,
 // templates from the templatesDir. It calls the progressFunc before generating
 // each file.
 func NewStaticBlogGeneratorWithProgress(id, templatesDir, outputDir string,
-	progressFunc ProgressFunc, readers Readers) (StaticBlogGenerator, error) {
+	progressFunc ProgressFunc, readers application.Readers) (StaticBlogGenerator, error) {
 	if _, err := os.Stat(templatesDir); err != nil {
 		return StaticBlogGenerator{},
 			fmt.Errorf("Templates directory not found: %s", templatesDir)
 	}
 
-	indexTemplate, err := template.New("layout.tmpl").Funcs(templateFuncs).ParseFiles(
-		filepath.Join(templatesDir, "layout.tmpl"),
-		filepath.Join(templatesDir, "index.tmpl"))
+	indexTemplate, err := createTemplate(templatesDir, "index.tmpl")
 	if err != nil {
 		return StaticBlogGenerator{}, err
 	}
 
-	postTemplate, err := template.New("layout.tmpl").Funcs(templateFuncs).ParseFiles(
-		filepath.Join(templatesDir, "layout.tmpl"),
-		filepath.Join(templatesDir, "post.tmpl"))
+	postTemplate, err := createTemplate(templatesDir, "post.tmpl")
+	if err != nil {
+		return StaticBlogGenerator{}, err
+	}
+
+	tagTemplate, err := createTemplate(templatesDir, "tag.tmpl")
 	if err != nil {
 		return StaticBlogGenerator{}, err
 	}
 
 	return StaticBlogGenerator{id, templatesDir, outputDir, progressFunc,
-		readers, indexTemplate, postTemplate}, nil
+		readers, indexTemplate, postTemplate, tagTemplate, []domain.Post{},
+		make(map[string][]domain.Post)}, nil
 }
 
-type templatePost struct {
-	Post
-	Slug string
-}
-
-func toTemplatePosts(posts ...Post) []templatePost {
-	var templatePosts []templatePost
-	for _, post := range posts {
-		templatePosts = append(templatePosts, templatePost{post, slug.Make(post.Title)})
-	}
-	return templatePosts
-}
-
-type sortedTemplatePosts []templatePost
-
-func (p sortedTemplatePosts) Len() int {
-	return len(p)
-}
-
-func (p sortedTemplatePosts) Swap(i, j int) {
-	p[i], p[j] = p[j], p[i]
-}
-
-func (p sortedTemplatePosts) Less(i, j int) bool {
-	return p[j].Written.Before(p[i].Written)
+func createTemplate(dir, name string) (*template.Template, error) {
+	return template.New("layout.tmpl").Funcs(templateFuncs).ParseFiles(
+		filepath.Join(dir, "layout.tmpl"),
+		filepath.Join(dir, name))
 }
 
 var templateFuncs = template.FuncMap{
@@ -181,6 +194,7 @@ var templateFuncs = template.FuncMap{
 	"summary": summary,
 	"even":    even,
 	"inc":     inc,
+	"slug":    slugify,
 }
 
 func html(markdown string) template.HTML {
@@ -204,4 +218,8 @@ func even(integer int) bool {
 
 func inc(integer int) int {
 	return integer + 1
+}
+
+func slugify(str string) string {
+	return slug.Make(str)
 }

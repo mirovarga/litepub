@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"time"
 
-	. "mirovarga.com/litepub"
 	"mirovarga.com/litepub/adapters"
+	"mirovarga.com/litepub/application"
 )
 
 const (
@@ -62,7 +62,7 @@ const (
   {{range .}}
     <div class="row">
       <div class="twelve columns">
-        <h4><a href="{{.Slug}}.html">{{.Title}}</a></h4>
+        <h4><a href="/{{.Title | slug}}.html">{{.Title}}</a></h4>
         {{.Content | summary | html}}
       </div>
     </div>
@@ -81,18 +81,47 @@ const (
       <p>
         <em>{{.Written.Format "Jan 2, 2006"}}</em>
       </p>
+	  {{if (len .Tags) ne 0}}
+		<p>
+		  {{range .Tags}}
+			<em><a href="/tags/{{. | slug}}.html">{{.}}</a></em>&nbsp;
+		  {{end}}
+		</p>
+	  {{end}}
       {{.Content | html}}
     </div>
   </div>
 {{end}}
     `
+	tagTemplate = `
+{{define "title"}}
+  Posts tagged {{.Name}}
+{{end}}
+
+{{define "content"}}
+  <div class="row">
+    <div class="twelve columns">
+      <h1>{{template "title" .}}</h1>
+	</div>
+  </div>
+
+  {{range .Posts}}
+    <div class="row">
+      <div class="twelve columns">
+        <h4><a href="/{{.Title | slug}}.html">{{.Title}}</a></h4>
+        {{.Content | summary | html}}
+      </div>
+    </div>
+  {{end}}
+{{end}}
+	`
 )
 
 const defaultName = "litepub-blog"
 
 func create(arguments map[string]interface{}) {
 	blogRepo := adapters.NewFSBlogRepository(".")
-	authors := NewAuthors(blogRepo)
+	authors := application.NewAuthors(blogRepo)
 
 	name, ok := arguments["<name>"].(string)
 	if !ok {
@@ -112,14 +141,16 @@ func create(arguments map[string]interface{}) {
 		writeTemplate(filepath.Join(dir, "layout.tmpl"), "")
 		writeTemplate(filepath.Join(dir, "index.tmpl"), "")
 		writeTemplate(filepath.Join(dir, "post.tmpl"), "")
+		writeTemplate(filepath.Join(dir, "tag.tmpl"), "")
 	} else {
 		writeTemplate(filepath.Join(dir, "layout.tmpl"), layoutTemplate)
 		writeTemplate(filepath.Join(dir, "index.tmpl"), indexTemplate)
 		writeTemplate(filepath.Join(dir, "post.tmpl"), postTemplate)
+		writeTemplate(filepath.Join(dir, "tag.tmpl"), tagTemplate)
 
 		err = authors.CreatePost(name, "Welcome to LitePub!",
 			"LitePub is a lightweight static blog generator written in Go.",
-			time.Now())
+			time.Now(), "LitePub")
 		if err != nil {
 			fmt.Printf("Failed to create post: %s\n", err)
 		}
