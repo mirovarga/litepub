@@ -12,8 +12,7 @@ import (
 )
 
 const (
-	layoutTemplate = `
-<!DOCTYPE html>
+	layoutTemplate = `<!DOCTYPE html>
 
 <html>
 
@@ -52,10 +51,8 @@ const (
     </div>
   </body>
 
-</html>
-    `
-	indexTemplate = `
-{{define "title"}}
+</html>`
+	indexTemplate = `{{define "title"}}
   Home
 {{end}}
 
@@ -68,10 +65,8 @@ const (
       </div>
     </div>
   {{end}}
-{{end}}
-    `
-	postTemplate = `
-{{define "title"}}
+{{end}}`
+	postTemplate = `{{define "title"}}
   {{.Title}}
 {{end}}
 
@@ -92,10 +87,8 @@ const (
       {{.Content | html}}
     </div>
   </div>
-{{end}}
-    `
-	tagTemplate = `
-{{define "title"}}
+{{end}}`
+	tagTemplate = `{{define "title"}}
   Posts tagged {{.Name}}
 {{end}}
 
@@ -114,8 +107,7 @@ const (
       </div>
     </div>
   {{end}}
-{{end}}
-	`
+{{end}}`
 )
 
 const defaultName = "litepub-blog"
