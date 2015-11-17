@@ -23,6 +23,7 @@ const (
 
     <title>LitePub Blog: {{template "title" .}}</title>
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,600,300">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   </head>
