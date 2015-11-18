@@ -14,23 +14,9 @@ databases. All it needs is one binary, posts written in
 [Markdown](https://en.wikipedia.org/wiki/Markdown) and a set of templates to
 render the posts to static HTML files.
 
-Posts don't have to include any special metadata like title or date in them;
-of course they do have titles, dates and optionally tags but they flow naturally
-and posts thus look like posts on their own.
-
-```markdown
-# How I Switched from Java to JavaScript
-
-*Jan 25, 2015*
-
-*Java, JavaScript*
-
-I know that there are lots of posts about why JavaScript, or more specifically
-Node.js, is better than Java but nevertheless I wanted to contribute, too.
-```
-
-LitePub supports tagging posts, draft posts and provides a built-in HTTP server
-that can rebuild a blog on the fly when its posts or templates change.
+Posts don't have to include any special metadata (aka front matter) like title
+or date in them - the title, date and optional tags are parsed from
+the natural flow of the posts.
 
 ## Quick Start
 
