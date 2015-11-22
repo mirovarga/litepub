@@ -26,7 +26,7 @@ func create(arguments map[string]interface{}) {
 		return
 	}
 
-	if arguments["--blank"].(int) == 1 {
+	if arguments["--skeleton"].(int) == 1 {
 		tmplDir := filepath.Join(dir, templatesDir)
 		os.MkdirAll(tmplDir, 0700)
 
