@@ -1,8 +1,9 @@
 package main
 
 // TODO -d, --dir <dir> option for each command so it can be run from any directory
+// TODO -q, --quiet for each command
 const usage = `
-LitePub - a lightweight static blog generator, https://github.com/mirovarga/litepub
+LitePub - a lightweight static blog generator, http://litepub.com
 
 Usage:
   litepub create [<name>] [-b, --blank]
