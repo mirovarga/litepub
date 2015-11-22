@@ -11,9 +11,12 @@ import (
 const defaultPort = "2703"
 
 // TODO -o, --output <dir>  Generate the blog to the specified directory [default: www]
-// TODO -R, --rebuild  Rebuild the blog before serving
 func serve(arguments map[string]interface{}) {
 	dir := arguments["<dir>"].(string)
+
+	if arguments["--rebuild"].(int) == 1 {
+		build(map[string]interface{}{"<dir>": dir})
+	}
 
 	port, ok := arguments["--port"].([]string)
 	if !ok {
