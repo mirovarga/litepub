@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"gopkg.in/fsnotify.v1"
 )
@@ -12,6 +13,8 @@ const defaultPort = "2703"
 // TODO -o, --output <dir>  Generate the blog to the specified directory [default: www]
 // TODO -R, --rebuild  Rebuild the blog before serving
 func serve(arguments map[string]interface{}) {
+	dir := arguments["<dir>"].(string)
+
 	port, ok := arguments["--port"].([]string)
 	if !ok {
 		port[0] = defaultPort
@@ -20,7 +23,7 @@ func serve(arguments map[string]interface{}) {
 	watch := arguments["--watch"].(int)
 
 	if watch == 1 {
-		go watchDirs()
+		go watchDirs(dir)
 	}
 
 	fmt.Printf("Running on http://localhost:%s\n", port[0])
@@ -29,20 +32,20 @@ func serve(arguments map[string]interface{}) {
 	}
 	fmt.Println("Ctrl+C to quit")
 
-	http.ListenAndServe(":"+port[0], http.FileServer(http.Dir(outputDir)))
+	http.ListenAndServe(":"+port[0], http.FileServer(http.Dir(filepath.Join(dir, outputDir))))
 }
 
-func watchDirs() {
+func watchDirs(dir string) {
 	watcher, _ := fsnotify.NewWatcher()
 	defer watcher.Close()
 
-	watcher.Add(postsDir)
-	watcher.Add(templatesDir)
+	watcher.Add(filepath.Join(dir, postsDir))
+	watcher.Add(filepath.Join(dir, templatesDir))
 
 	for {
 		select {
 		case <-watcher.Events:
-			build(nil)
+			build(map[string]interface{}{"<dir>": dir})
 		}
 	}
 }

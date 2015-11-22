@@ -1,6 +1,10 @@
 package main
 
-import "github.com/docopt/docopt-go"
+import (
+	"path/filepath"
+
+	"github.com/docopt/docopt-go"
+)
 
 const (
 	postsDir     = "posts"
@@ -11,6 +15,10 @@ const (
 func main() {
 	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.3.1", false)
 
+	if _, ok := arguments["<dir>"].(string); !ok {
+		arguments["<dir>"] = "."
+	}
+
 	if arguments["create"].(bool) {
 		create(arguments)
 	} else if arguments["build"].(bool) {
@@ -18,4 +26,14 @@ func main() {
 	} else if arguments["serve"].(bool) {
 		serve(arguments)
 	}
+}
+
+func repoDir(dir string) string {
+	dirs := filepath.SplitList(dir)
+	return filepath.Join(dirs[:len(dirs)-1]...)
+}
+
+func blogID(dir string) string {
+	dirs := filepath.SplitList(dir)
+	return dirs[len(dirs)-1]
 }

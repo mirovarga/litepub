@@ -1,17 +1,18 @@
 package main
 
-// TODO -d, --dir <dir> option for each command so it can be run from any directory
-// TODO -q, --quiet for each command
+// TODO -q, --quiet for each command (own log that can be set to quiet mode)
+// TODO docs for <dir>
 const usage = `
 LitePub - a lightweight static blog generator, http://litepub.com
 
 Usage:
-  litepub create [<name>] [-b, --blank]
-  litepub build
-  litepub serve  [-p, --port <port>] [-w, --watch]
+  litepub create [<dir>] [-b, --blank]
+  litepub build  [<dir>]
+  litepub serve  [<dir>] [-p, --port <port>] [-w, --watch]
 
 Arguments:
-  <name>             Name of the blog [default: litepub-blog]
+  <dir>  The directory to create the blog in or look for; it will be created if
+         it doesn't exist (only when creating a blog) [default: .]
 
 Options:
   -b, --blank        Don't create sample posts and templates
