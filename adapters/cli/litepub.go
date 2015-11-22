@@ -9,7 +9,7 @@ const (
 )
 
 func main() {
-	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.3.0", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.3.1", false)
 
 	if arguments["create"].(bool) {
 		create(arguments)
