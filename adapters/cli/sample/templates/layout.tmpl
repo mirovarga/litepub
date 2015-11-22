@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LitePub: {{template "title" .}}</title>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/font.min.css">
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/skeleton.min.css">
+    <link rel="stylesheet" href="/css/prism.min.css">
+    <link rel="stylesheet" href="/css/main.min.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <div class="row">
+          <div class="offset-by-one ten columns">
+            <a href="/" title="Home" class="logo">
+              <img src="/images/logo.png" alt="Logo"> LitePub
+            </a>
+            <small class="u-pull-right">
+              <a href="http://twitter.com/mirovarga" title="Twitter" target="_blank" class="img">
+                <img src="/images/twitter-24.png" alt="Twitter">
+              </a>&nbsp;
+              <a href="http://github.com/mirovarga/litepub" title="Source Code" target="_blank" class="img">
+                <img src="/images/github-24.png" alt="GitGub">
+              </a>&nbsp;
+              <a href="mailto:hello@mirovarga.com" title="Email" target="_blank" class="img">
+                <img src="/images/email-24.png" alt="Email">
+              </a>
+            </small>
+          </div>
+        </div>
+      </header>
+
+      {{template "content" .}}
+
+      <footer>
+        <div class="row">
+          <div class="offset-by-one ten columns">
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-by-one ten columns">
+            <small>
+              &copy; 2015 <a href="http://www.mirovarga.com" title="The Author" target="_blank">Miro Varga</a>
+              <span class="u-pull-right">
+                Built with <strong><a href="/" title="LitePub">myself ;-)</a></strong>&nbsp;
+                <a href="http://twitter.com/mirovarga" title="Twitter" target="_blank" class="img">
+                  <img src="/images/twitter-16.png" alt="Twitter">
+                </a>&nbsp;
+                <a href="http://github.com/mirovarga/litepub" title="Source Code" target="_blank" class="img">
+                  <img src="/images/github-16.png" alt="GitGub">
+                </a>&nbsp;
+                <a href="mailto:hello@mirovarga.com" title="Email" target="_blank" class="img">
+                  <img src="/images/email-16.png" alt="Email">
+                </a>
+              </span>
+            </small>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="/js/prism.min.js"></script>
+  </body>
+
+</html>

@@ -15,6 +15,10 @@ BIN_FILE=litepub
 OTHER_FILES="LICENSE README.md"
 VERSION=`git describe --tags --abbrev=0`
 
+echo "Generating sample blog assets"
+rm -f adapters/cli/sample.go
+go generate adapters/cli/create.go
+
 echo "Preparing dirs"
 rm -rf $BIN_DIR
 mkdir -p $DARWIN_DIR

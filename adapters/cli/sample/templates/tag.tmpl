@@ -1,0 +1,32 @@
+{{define "title"}}
+  Posts tagged {{.Name}}
+{{end}}
+
+{{define "content"}}
+  <div class="row">
+    <div class="offset-by-one ten columns">
+      <h2>Posts Tagged <em>{{.Name}}</em></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="offset-by-one ten columns">
+      {{$l := len .Posts}}
+      {{range $i, $e := .Posts}}
+        {{if even $i}}<div class="row">{{end}}
+          <div class="six columns">
+            <h4><a href="/{{$e.Title | slug}}.html">{{$e.Title}}</a></h4>
+            <small>
+              <em>
+                {{range $e.Tags}}
+                  <a href="/tags/{{. | slug}}.html" title="Posts Tagged {{.}}">{{.}}</a>&nbsp;
+                {{end}}
+              </em>
+            </small>
+            {{(printf "%s <small>[Read more](/%s.html)</small>" ($e.Content | summary) (.Title | slug)) | html}}
+          </div>
+        {{if or (eq (inc $i) $l) (not (even $i))}}</div>{{end}}
+      {{end}}
+    </div>
+  </div>
+{{end}}
