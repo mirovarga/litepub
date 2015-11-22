@@ -8,7 +8,7 @@ LitePub - a lightweight static blog generator, http://litepub.com
 Usage:
   litepub create [<name>] [-b, --blank]
   litepub build
-  litepub server [-p, --port <port>] [-w, --watch]
+  litepub serve  [-p, --port <port>] [-w, --watch]
 
 Arguments:
   <name>             Name of the blog [default: litepub-blog]

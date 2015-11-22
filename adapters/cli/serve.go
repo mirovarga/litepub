@@ -10,7 +10,8 @@ import (
 const defaultPort = "2703"
 
 // TODO -o, --output <dir>  Generate the blog to the specified directory [default: www]
-func server(arguments map[string]interface{}) {
+// TODO -R, --rebuild  Rebuild the blog before serving
+func serve(arguments map[string]interface{}) {
 	port, ok := arguments["--port"].([]string)
 	if !ok {
 		port[0] = defaultPort

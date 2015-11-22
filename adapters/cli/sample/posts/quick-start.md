@@ -43,7 +43,7 @@ unpack it to a directory.
 5. Run the built-in server:
 
 	```
-	$ ../litepub server
+	$ ../litepub serve
 	Running on http://localhost:2703
 	Ctrl+C to quit
 	```

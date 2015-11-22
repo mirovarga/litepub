@@ -15,7 +15,7 @@ func main() {
 		create(arguments)
 	} else if arguments["build"].(bool) {
 		build(arguments)
-	} else if arguments["server"].(bool) {
-		server(arguments)
+	} else if arguments["serve"].(bool) {
+		serve(arguments)
 	}
 }
