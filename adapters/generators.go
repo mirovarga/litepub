@@ -20,7 +20,7 @@ import (
 type ProgressFunc func(path string)
 
 // StaticBlogGenerator generates Blogs to static HTML files.
-// TODO add docs from README
+// TODO add docs from litepub.com
 type StaticBlogGenerator struct {
 	id            string
 	templatesDir  string
