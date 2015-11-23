@@ -13,7 +13,7 @@ $ litepub create
 If you don't need the sample templates and posts use the `--skeleton` option:
 
 ```
-$ litepub --skeleton
+$ litepub create --skeleton
 ```
 
 > Because the template files are required they will be still created but with no
