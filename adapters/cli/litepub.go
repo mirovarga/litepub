@@ -13,7 +13,7 @@ const (
 )
 
 func main() {
-	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.3.1", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.4.0", false)
 
 	if _, ok := arguments["<dir>"].(string); !ok {
 		arguments["<dir>"] = "."
