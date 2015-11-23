@@ -1,7 +1,6 @@
 package main
 
 // TODO -q, --quiet for each command (own log that can be set to quiet mode)
-// TODO docs for <dir>, --rebuild, --skeleton
 const usage = `
 LitePub - a lightweight static blog generator, http://litepub.com
 
