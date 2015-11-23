@@ -4,23 +4,16 @@
 
 *Docs, Basics*
 
-The following will create a sample blog in the `litepub-blog` directory:
+The following will create a sample blog in the current directory:
 
 ```
 $ litepub create
 ```
 
-You can override the default directory by providing your own:
+If you don't need the sample templates and posts use the `--skeleton` option:
 
 ```
-$ litepub create my-blog
-```
-> If the directory already exists the command will fail.
-
-If you don't need the sample templates and posts use the `--blank` option:
-
-```
-$ litepub create my-blog --blank
+$ litepub --skeleton
 ```
 
 > Because the template files are required they will be still created but with no
@@ -28,7 +21,7 @@ content.
 
 ## Directory Structure
 
-Each blog is just a directory with the following structure:
+Each blog is stored in a directory with the following structure:
 
 ```bash
 posts/          # the posts
@@ -39,6 +32,20 @@ templates/      # the templates and accompanying files (html, css, js, png, etc.
   post.tmpl
   tag.tmpl
 www/            # the generated HTML files (plus copied accompanying files)
+```
+
+## The **create** Command Reference
+
+```
+Usage:
+  litepub create [<dir>] [-s, --skeleton]
+
+Arguments:
+  <dir>  The directory to create the blog in or look for; it will be created if
+         it doesn't exist (only when creating a blog) [default: .]
+
+Options:
+  -s, --skeleton     Don't create sample posts and templates
 ```
 
 **Next**: [Creating Posts](/creating-posts.html)

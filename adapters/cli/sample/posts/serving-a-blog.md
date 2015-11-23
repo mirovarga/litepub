@@ -45,4 +45,48 @@ Ctrl+C to quit
 > Note that subdirectories in the `posts` and `templates` directories aren't
 watched.
 
+## Rebuilding a Blog Before Serving
+
+Sometimes it can be useful to rebuild a blog before serving it, for example when
+you don't remember if you made any changes to posts or templates. To rebuild
+a blog before serving use the `--rebuild` option:
+
+```
+$ litepub serve --rebuild
+Generating: index.html
+Generating: tags/reference.html
+Generating: tags/tutorial.html
+Generating: tags/advanced.html
+Generating: tags/docs.html
+Generating: tags/basics.html
+Generating: overview.html
+Generating: quick-start.html
+Generating: installation.html
+Generating: creating-a-blog.html
+Generating: creating-posts.html
+Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
+Generating: serving-a-blog.html
+Generating: templates.html
+Generating: getting-help.html
+Generating: websites-using-litepub.html
+Running on http://localhost:2703
+Ctrl+C to quit
+```
+
+## The **serve** Command Reference
+
+```
+Usage:
+  litepub serve  [<dir>] [-R, --rebuild] [-p, --port <port>] [-w, --watch]
+
+Arguments:
+  <dir>  The directory to create the blog in or look for; it will be created if
+         it doesn't exist (only when creating a blog) [default: .]
+
+Options:
+  -R, --rebuild      Rebuild the blog before serving
+  -p, --port <port>  The port to listen on [default: 2703]
+  -w, --watch        Rebuild the blog when posts or templates change
+```
+
 **Next**: [Templates](/templates.html)

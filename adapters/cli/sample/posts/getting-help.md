@@ -11,15 +11,17 @@ $ litepub --help
 LitePub - a lightweight static blog generator, http://litepub.com
 
 Usage:
-  litepub create [<name>] [-b, --blank]
-  litepub build
-  litepub serve  [-p, --port <port>] [-w, --watch]
+  litepub create [<dir>] [-s, --skeleton]
+  litepub build  [<dir>]
+  litepub serve  [<dir>] [-R, --rebuild] [-p, --port <port>] [-w, --watch]
 
 Arguments:
-  <name>             Name of the blog [default: litepub-blog]
+  <dir>  The directory to create the blog in or look for; it will be created if
+         it doesn't exist (only when creating a blog) [default: .]
 
 Options:
-  -b, --blank        Don't create sample posts and templates
+  -s, --skeleton     Don't create sample posts and templates
+  -R, --rebuild      Rebuild the blog before serving
   -p, --port <port>  The port to listen on [default: 2703]
   -w, --watch        Rebuild the blog when posts or templates change
   -h, --help         Show this screen

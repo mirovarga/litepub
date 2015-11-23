@@ -20,8 +20,7 @@ unpack it to a directory.
 4. Build the blog:
 
 	```
-	$ cd litepub-blog
-	$ ../litepub build
+	$ ./litepub build
   Generating: index.html
   Generating: tags/reference.html
   Generating: tags/tutorial.html
@@ -43,7 +42,7 @@ unpack it to a directory.
 5. Run the built-in server:
 
 	```
-	$ ../litepub serve
+	$ ./litepub serve
 	Running on http://localhost:2703
 	Ctrl+C to quit
 	```

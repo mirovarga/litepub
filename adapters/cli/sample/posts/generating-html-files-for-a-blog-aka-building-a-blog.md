@@ -39,4 +39,15 @@ the tag name when generating tag pages) and adding the `html` extension. For
 example, a post with the *How I Switched from Java to JavaScript* title is
 generated to the `how-i-switched-from-java-to-javascript.html` file.
 
+## The **build** Command Reference
+
+```
+Usage:
+  litepub build  [<dir>]
+
+Arguments:
+  <dir>  The directory to create the blog in or look for; it will be created if
+         it doesn't exist (only when creating a blog) [default: .]
+```
+
 **Next**: [Serving a Blog](/serving-a-blog.html)
