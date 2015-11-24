@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -10,7 +9,6 @@ import (
 
 const defaultPort = "2703"
 
-// TODO -o, --output <dir>  Generate the blog to the specified directory [default: www]
 func serve(arguments map[string]interface{}) {
 	dir := arguments["<dir>"].(string)
 
@@ -29,11 +27,11 @@ func serve(arguments map[string]interface{}) {
 		go watchDirs(dir)
 	}
 
-	fmt.Printf("Running on http://localhost:%s\n", port[0])
+	log.Printf("Running on http://localhost:%s\n", port[0])
 	if watch == 1 {
-		fmt.Println("Rebuilding when posts or templates change")
+		log.Printf("Rebuilding when posts or templates change\n")
 	}
-	fmt.Println("Ctrl+C to quit")
+	log.Printf("Ctrl+C to quit\n")
 
 	http.ListenAndServe(":"+port[0], http.FileServer(http.Dir(filepath.Join(dir, outputDir))))
 }

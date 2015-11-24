@@ -3,7 +3,6 @@ package main
 //go:generate go-bindata -prefix sample/ -o sample.go sample/...
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -22,7 +21,7 @@ func create(arguments map[string]interface{}) {
 
 	err := authors.CreateBlog(blogID(dir))
 	if err != nil {
-		fmt.Printf("Failed to create blog: %s\n", err)
+		log.Fatalf("Failed to create blog: %s\n", err)
 		return
 	}
 
@@ -37,4 +36,5 @@ func create(arguments map[string]interface{}) {
 		RestoreAssets(dir, "templates")
 		RestoreAssets(dir, "posts")
 	}
+	log.Printf("Created blog: %s\n", dir)
 }

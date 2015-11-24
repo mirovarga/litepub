@@ -38,7 +38,7 @@ www/            # the generated HTML files (plus copied accompanying files)
 
 ```
 Usage:
-  litepub create [<dir>] [-s, --skeleton]
+  litepub create [<dir>] [-s, --skeleton] [-q, --quiet]
 
 Arguments:
   <dir>  The directory to create the blog in or look for; it will be created if
@@ -46,6 +46,7 @@ Arguments:
 
 Options:
   -s, --skeleton     Don't create sample posts and templates
+  -q, --quiet        Show only errors
 ```
 
 **Next**: [Creating Posts](/creating-posts.html)

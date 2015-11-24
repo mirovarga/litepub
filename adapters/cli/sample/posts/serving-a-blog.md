@@ -77,7 +77,7 @@ Ctrl+C to quit
 
 ```
 Usage:
-  litepub serve  [<dir>] [-R, --rebuild] [-p, --port <port>] [-w, --watch]
+  litepub serve  [<dir>] [-R, --rebuild] [-p, --port <port>] [-w, --watch] [-q, --quiet]
 
 Arguments:
   <dir>  The directory to create the blog in or look for; it will be created if
@@ -87,6 +87,7 @@ Options:
   -R, --rebuild      Rebuild the blog before serving
   -p, --port <port>  The port to listen on [default: 2703]
   -w, --watch        Rebuild the blog when posts or templates change
+  -q, --quiet        Show only errors
 ```
 
 **Next**: [Templates](/templates.html)

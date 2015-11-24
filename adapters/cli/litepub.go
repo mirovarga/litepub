@@ -1,9 +1,10 @@
 package main
 
 import (
-	"path/filepath"
-
+	"fmt"
 	"github.com/docopt/docopt-go"
+
+	"path/filepath"
 )
 
 const (
@@ -12,8 +13,12 @@ const (
 	outputDir    = "www"
 )
 
+var log quietableLog
+
 func main() {
-	arguments, _ := docopt.Parse(usage, nil, true, "LitePub, 0.4.1", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "LitePub 0.5.0", false)
+
+	log = quietableLog{arguments["--quiet"].(int) == 1}
 
 	if _, ok := arguments["<dir>"].(string); !ok {
 		arguments["<dir>"] = "."
@@ -36,4 +41,18 @@ func repoDir(dir string) string {
 func blogID(dir string) string {
 	dirs := filepath.SplitList(dir)
 	return dirs[len(dirs)-1]
+}
+
+type quietableLog struct {
+	quiet bool
+}
+
+func (l quietableLog) Printf(format string, v ...interface{}) {
+	if !l.quiet {
+		fmt.Printf(format, v...)
+	}
+}
+
+func (l quietableLog) Fatalf(format string, v ...interface{}) {
+	fmt.Printf("ERROR: "+format, v...)
 }

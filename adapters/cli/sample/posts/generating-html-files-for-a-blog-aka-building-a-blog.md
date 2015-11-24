@@ -43,11 +43,14 @@ generated to the `how-i-switched-from-java-to-javascript.html` file.
 
 ```
 Usage:
-  litepub build  [<dir>]
+  litepub build  [<dir>] [-q, --quiet]
 
 Arguments:
   <dir>  The directory to create the blog in or look for; it will be created if
          it doesn't exist (only when creating a blog) [default: .]
+
+Options:
+  -q, --quiet        Show only errors     
 ```
 
 **Next**: [Serving a Blog](/serving-a-blog.html)

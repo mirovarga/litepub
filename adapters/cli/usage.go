@@ -1,13 +1,13 @@
 package main
 
-// TODO -q, --quiet for each command (own log that can be set to quiet mode)
 const usage = `
-LitePub - a lightweight static blog generator, http://litepub.com
+LitePub 0.5.0 [litepub.com, github.com/mirovarga/litepub]
+Copyright (c) 2015 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
-  litepub create [<dir>] [-s, --skeleton]
-  litepub build  [<dir>]
-  litepub serve  [<dir>] [-R, --rebuild] [-p, --port <port>] [-w, --watch]
+  litepub create [<dir>] [-s, --skeleton] [-q, --quiet]
+  litepub build  [<dir>] [-q, --quiet]
+  litepub serve  [<dir>] [-R, --rebuild] [-p, --port <port>] [-w, --watch] [-q, --quiet]
 
 Arguments:
   <dir>  The directory to create the blog in or look for; it will be created if
@@ -18,6 +18,7 @@ Options:
   -R, --rebuild      Rebuild the blog before serving
   -p, --port <port>  The port to listen on [default: 2703]
   -w, --watch        Rebuild the blog when posts or templates change
+  -q, --quiet        Show only errors
   -h, --help         Show this screen
   -v, --version      Show version
 `
