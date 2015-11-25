@@ -21,7 +21,7 @@ func create(arguments map[string]interface{}) {
 
 	err := authors.CreateBlog(blogID(dir))
 	if err != nil {
-		log.Fatalf("Failed to create blog: %s\n", err)
+		log.Errorf("Failed to create blog: %s\n", err)
 		return
 	}
 
@@ -36,5 +36,5 @@ func create(arguments map[string]interface{}) {
 		RestoreAssets(dir, "templates")
 		RestoreAssets(dir, "posts")
 	}
-	log.Printf("Created blog: %s\n", dir)
+	log.Infof("Created blog: %s\n", dir)
 }

@@ -17,16 +17,16 @@ func build(arguments map[string]interface{}) {
 		filepath.Join(dir, templatesDir), filepath.Join(dir, outputDir),
 		printProgress, readers)
 	if err != nil {
-		log.Fatalf("Failed to create generator: %s\n", err)
+		log.Errorf("Failed to create generator: %s\n", err)
 		return
 	}
 
 	err = gen.Generate()
 	if err != nil {
-		log.Fatalf("Failed to generate blog: %s\n", err)
+		log.Errorf("Failed to generate blog: %s\n", err)
 	}
 }
 
 func printProgress(path string) {
-	log.Printf("Generating: %s\n", path)
+	log.Infof("Generating: %s\n", path)
 }

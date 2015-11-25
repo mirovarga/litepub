@@ -47,12 +47,12 @@ type quietableLog struct {
 	quiet bool
 }
 
-func (l quietableLog) Printf(format string, v ...interface{}) {
+func (l quietableLog) Infof(format string, v ...interface{}) {
 	if !l.quiet {
 		fmt.Printf(format, v...)
 	}
 }
 
-func (l quietableLog) Fatalf(format string, v ...interface{}) {
+func (l quietableLog) Errorf(format string, v ...interface{}) {
 	fmt.Printf("ERROR: "+format, v...)
 }

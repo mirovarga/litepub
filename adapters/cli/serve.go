@@ -27,11 +27,11 @@ func serve(arguments map[string]interface{}) {
 		go watchDirs(dir)
 	}
 
-	log.Printf("Running on http://localhost:%s\n", port[0])
+	log.Infof("Running on http://localhost:%s\n", port[0])
 	if watch == 1 {
-		log.Printf("Rebuilding when posts or templates change\n")
+		log.Infof("Rebuilding when posts or templates change\n")
 	}
-	log.Printf("Ctrl+C to quit\n")
+	log.Infof("Ctrl+C to quit\n")
 
 	http.ListenAndServe(":"+port[0], http.FileServer(http.Dir(filepath.Join(dir, outputDir))))
 }
