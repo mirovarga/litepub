@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/docopt/docopt-go"
-
 	"path/filepath"
+
+	"github.com/docopt/docopt-go"
 )
 
 const (
