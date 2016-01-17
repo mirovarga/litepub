@@ -24,7 +24,6 @@ Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
 Generating: serving-a-blog.html
 Generating: templates.html
 Generating: getting-help.html
-Generating: websites-using-litepub.html
 ```
 
 > The draft posts are ignored when building a blog.

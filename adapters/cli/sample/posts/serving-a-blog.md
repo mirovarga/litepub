@@ -68,7 +68,6 @@ Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
 Generating: serving-a-blog.html
 Generating: templates.html
 Generating: getting-help.html
-Generating: websites-using-litepub.html
 Running on http://localhost:2703
 Ctrl+C to quit
 ```

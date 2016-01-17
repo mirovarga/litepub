@@ -36,7 +36,6 @@ unpack it to a directory.
   Generating: serving-a-blog.html
   Generating: templates.html
   Generating: getting-help.html
-  Generating: websites-using-litepub.html
 	```
 
 5. Run the built-in server:
