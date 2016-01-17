@@ -8,8 +8,8 @@ To see all available commands and their options use the `--help` option:
 
 ```
 $ litepub --help
-LitePub 0.5.0 [litepub.com, github.com/mirovarga/litepub]
-Copyright (c) 2015 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
+LitePub 0.5.1 [github.com/mirovarga/litepub]
+Copyright (c) 2016 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
   litepub create [<dir>] [-s, --skeleton] [-q, --quiet]
@@ -29,5 +29,3 @@ Options:
   -h, --help         Show this screen
   -v, --version      Show version
 ```
-
-**Next**: [Websites Using LitePub](/websites-using-litepub.html)
