@@ -405,7 +405,7 @@ To see all available commands and their options use the `--help` option:
 
 ```
 $ litepub --help
-LitePub 0.5.1 [github.com/mirovarga/litepub]
+LitePub 0.5.2 [github.com/mirovarga/litepub]
 Copyright (c) 2016 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
