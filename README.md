@@ -35,24 +35,24 @@ unpack it to a directory.
 
 4. Build the blog:
 
-	```
-	$ ./litepub build
-  Generating: index.html
-  Generating: tags/reference.html
-  Generating: tags/tutorial.html
-  Generating: tags/advanced.html
-  Generating: tags/docs.html
-  Generating: tags/basics.html
-  Generating: overview.html
-  Generating: quick-start.html
-  Generating: installation.html
-  Generating: creating-a-blog.html
-  Generating: creating-posts.html
-  Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
-  Generating: serving-a-blog.html
-  Generating: templates.html
-  Generating: getting-help.html
-	```
+```
+$ ./litepub build
+Generating: index.html
+Generating: tags/reference.html
+Generating: tags/tutorial.html
+Generating: tags/advanced.html
+Generating: tags/docs.html
+Generating: tags/basics.html
+Generating: overview.html
+Generating: quick-start.html
+Generating: installation.html
+Generating: creating-a-blog.html
+Generating: creating-posts.html
+Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
+Generating: serving-a-blog.html
+Generating: templates.html
+Generating: getting-help.html
+```
 
 5. Run the built-in server:
 
