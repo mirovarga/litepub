@@ -134,7 +134,7 @@ func (r FSBlogRepository) readPosts(dir string) ([]domain.Post, error) {
 
 	var posts []domain.Post
 	for _, postFile := range postFiles {
-		if postFile.IsDir() {
+		if postFile.IsDir() || strings.HasPrefix(postFile.Name(),".") {
 			continue
 		}
 
