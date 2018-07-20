@@ -1,8 +1,8 @@
 package main
 
 const usage = `
-LitePub 0.5.2 [github.com/mirovarga/litepub]
-Copyright (c) 2016 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
+LitePub 0.5.3 [github.com/mirovarga/litepub]
+Copyright (c) 2018 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
   litepub create [<dir>] [-s, --skeleton] [-q, --quiet]

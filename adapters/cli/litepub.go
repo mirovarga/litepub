@@ -16,7 +16,7 @@ const (
 var log quietableLog
 
 func main() {
-	arguments, _ := docopt.Parse(usage, nil, true, "LitePub 0.5.2", false)
+	arguments, _ := docopt.Parse(usage, nil, true, "LitePub 0.5.3", false)
 
 	log = quietableLog{arguments["--quiet"].(int) == 1}
 
