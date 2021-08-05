@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"gopkg.in/fsnotify.v1"
+	"github.com/fsnotify/fsnotify"
 )
 
 const defaultPort = "2703"

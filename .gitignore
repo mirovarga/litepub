@@ -1,4 +1,4 @@
-bin
-TODO.md
-adapters/cli/sample.go
 .idea
+bin
+adapters/cli/sample.go
+ROADMAP.md
