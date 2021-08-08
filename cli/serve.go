@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 
 const defaultPort = "2703"
 
-func serve(arguments map[string]interface{}) {
+func serve(arguments map[string]interface{}) int {
 	dir := arguments["<dir>"].(string)
 
 	if arguments["--rebuild"].(int) == 1 {
@@ -34,6 +34,7 @@ func serve(arguments map[string]interface{}) {
 	log.Infof("Ctrl+C to quit\n")
 
 	http.ListenAndServe(":"+port[0], http.FileServer(http.Dir(filepath.Join(dir, outputDir))))
+	return 0
 }
 
 func watchDirs(dir string) {

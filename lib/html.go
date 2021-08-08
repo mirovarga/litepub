@@ -1,4 +1,4 @@
-package adapters
+package lib
 
 import (
 	"fmt"
@@ -10,9 +10,6 @@ import (
 	"github.com/gosimple/slug"
 	"github.com/russross/blackfriday"
 	"github.com/termie/go-shutil"
-
-	"mirovarga.com/litepub/application"
-	"mirovarga.com/litepub/domain"
 )
 
 // ProgressFunc is used to monitor progress of generating a Blog. It is called
@@ -21,43 +18,36 @@ type ProgressFunc func(path string)
 
 // StaticBlogGenerator generates Blogs to static HTML files.
 type StaticBlogGenerator struct {
-	id            string
 	templatesDir  string
 	outputDir     string
 	progressFunc  ProgressFunc
-	readers       application.Readers
 	indexTemplate *template.Template
 	postTemplate  *template.Template
 	tagTemplate   *template.Template
-	posts         []domain.Post
-	postsByTag    map[string][]domain.Post
+	posts         []Post
+	postsByTag    map[string][]Post
 }
 
 // Generate generates a Blog to static HTML files.
 func (g StaticBlogGenerator) Generate() error {
 	err := g.prepareOutputDir()
 	if err != nil {
-		return fmt.Errorf("Failed to prepare output directory: %s", err)
-	}
-
-	err = g.readPosts()
-	if err != nil {
-		return fmt.Errorf("Failed to read posts: %s", err)
+		return fmt.Errorf("failed to prepare output directory: %s", err)
 	}
 
 	err = g.generateIndex()
 	if err != nil {
-		return fmt.Errorf("Failed to generate index: %s", err)
+		return fmt.Errorf("failed to generate index: %s", err)
 	}
 
 	err = g.generateTags()
 	if err != nil {
-		return fmt.Errorf("Failed to generate tags: %s", err)
+		return fmt.Errorf("failed to generate tags: %s", err)
 	}
 
 	err = g.generatePosts()
 	if err != nil {
-		return fmt.Errorf("Failed to generate posts: %s", err)
+		return fmt.Errorf("failed to generate posts: %s", err)
 	}
 
 	return nil
@@ -79,24 +69,7 @@ func (g StaticBlogGenerator) prepareOutputDir() error {
 		return err
 	}
 
-	os.Mkdir(filepath.Join(g.outputDir, "tags"), 0700)
-
-	return nil
-}
-
-func (g *StaticBlogGenerator) readPosts() error {
-	blog, err := g.readers.GetBlog(g.id)
-	if err != nil {
-		return err
-	}
-
-	g.posts = blog.PostsByDate(false, false)
-
-	for _, tag := range blog.Tags(false) {
-		g.postsByTag[tag] = blog.PostsByDate(false, false, tag)
-	}
-
-	return nil
+	return os.Mkdir(filepath.Join(g.outputDir, "tags"), 0700)
 }
 
 func (g StaticBlogGenerator) generateIndex() error {
@@ -119,7 +92,7 @@ func (g StaticBlogGenerator) generateTags() error {
 		err := g.generatePage(g.tagTemplate,
 			filepath.Join("tags", slug.Make(tag)+".html"), struct {
 				Name  string
-				Posts []domain.Post
+				Posts []Post
 			}{tag, posts})
 		if err != nil {
 			return err
@@ -144,22 +117,13 @@ func (g StaticBlogGenerator) generatePage(template *template.Template,
 }
 
 // NewStaticBlogGenerator creates a StaticBlogGenerator that generates the Blog
-// with the ID to static HTML files in the outputDir using templates from
-// the templatesDir.
-func NewStaticBlogGenerator(id, templatesDir, outputDir string,
-	readers application.Readers) (StaticBlogGenerator, error) {
-	return NewStaticBlogGeneratorWithProgress(id, templatesDir, outputDir, nil, readers)
-}
-
-// NewStaticBlogGeneratorWithProgress creates a StaticBlogGenerator that
-// generates the Blog with the ID to static HTML files in the outputDir using
-// templates from the templatesDir. It calls the progressFunc before generating
-// each file.
-func NewStaticBlogGeneratorWithProgress(id, templatesDir, outputDir string,
-	progressFunc ProgressFunc, readers application.Readers) (StaticBlogGenerator, error) {
+// to static HTML files in the outputDir using templates from the templatesDir.
+// It calls the progressFunc before generating each file.
+func NewStaticBlogGenerator(blog Blog, templatesDir, outputDir string,
+	progressFunc ProgressFunc) (StaticBlogGenerator, error) {
 	if _, err := os.Stat(templatesDir); err != nil {
 		return StaticBlogGenerator{},
-			fmt.Errorf("Templates directory not found: %s", templatesDir)
+			fmt.Errorf("templates directory not found: %s", templatesDir)
 	}
 
 	indexTemplate, err := createTemplate(templatesDir, "index.tmpl")
@@ -177,9 +141,15 @@ func NewStaticBlogGeneratorWithProgress(id, templatesDir, outputDir string,
 		return StaticBlogGenerator{}, err
 	}
 
-	return StaticBlogGenerator{id, templatesDir, outputDir, progressFunc,
-		readers, indexTemplate, postTemplate, tagTemplate, []domain.Post{},
-		make(map[string][]domain.Post)}, nil
+	posts := blog.PostsByDate(false, false)
+
+	postsByTag := map[string][]Post{}
+	for _, tag := range blog.Tags(false) {
+		postsByTag[tag] = blog.PostsByDate(false, false, tag)
+	}
+
+	return StaticBlogGenerator{templatesDir, outputDir, progressFunc,
+		indexTemplate, postTemplate, tagTemplate, posts, postsByTag}, nil
 }
 
 func createTemplate(dir, name string) (*template.Template, error) {

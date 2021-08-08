@@ -2,8 +2,6 @@ github.com/docopt/docopt-go v0.0.0-20180111231733-ee0de3bc6815 h1:bWDMxwH3px2JBh
 github.com/docopt/docopt-go v0.0.0-20180111231733-ee0de3bc6815/go.mod h1:WwZ+bS3ebgob9U8Nd0kOddGdZWjyMGR8Wziv+TBNwSE=
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
-github.com/go-bindata/go-bindata v1.0.0 h1:DZ34txDXWn1DyWa+vQf7V9ANc2ILTtrEjtlsdJRF26M=
-github.com/go-bindata/go-bindata v1.0.0/go.mod h1:xK8Dsgwmeed+BBsSy2XTopBn/8uK2HWuGSnA11C3Joo=
 github.com/gosimple/slug v1.10.0 h1:3XbiQua1IpCdrvuntWvGBxVm+K99wCSxJjlxkP49GGQ=
 github.com/gosimple/slug v1.10.0/go.mod h1:MICb3w495l9KNdZm+Xn5b6T2Hn831f9DMxiJ1r+bAjw=
 github.com/gosimple/unidecode v1.0.0 h1:kPdvM+qy0tnk4/BrnkrbdJ82xe88xn7c9hcaipDz4dQ=

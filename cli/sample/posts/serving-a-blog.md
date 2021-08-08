@@ -4,8 +4,8 @@
 
 *Docs, Basics*
 
-LitePub has a built-in server so you can see how a generated blog looks like
-in a browser. `cd` to the blog's directory and start the server:
+LitePub has a built-in server so you can see how a generated blog looks like in
+a browser. `cd` to the blog's directory and start the server:
 
 ```
 $ litepub serve
@@ -42,14 +42,13 @@ Rebuilding when posts or templates change
 Ctrl+C to quit
 ```
 
-> Note that subdirectories in the `posts` and `templates` directories aren't
-watched.
+> Note that subdirectories in the `posts` and `templates` directories aren't watched.
 
 ## Rebuilding a Blog Before Serving
 
 Sometimes it can be useful to rebuild a blog before serving it, for example when
-you don't remember if you made any changes to posts or templates. To rebuild
-a blog before serving use the `--rebuild` option:
+you don't remember if you made any changes to posts or templates. To rebuild a
+blog before serving use the `--rebuild` option:
 
 ```
 $ litepub serve --rebuild

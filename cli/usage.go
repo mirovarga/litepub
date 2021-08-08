@@ -1,15 +1,8 @@
-# Getting Help
+package cli
 
-*Nov 11, 2015*
-
-*Docs, Reference*
-
-To see all available commands and their options use the `--help` option:
-
-```
-$ litepub --help
-LitePub 0.5.3 [github.com/mirovarga/litepub]
-Copyright (c) 2018 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
+const usage = `
+LitePub 0.5.4 [github.com/mirovarga/litepub]
+Copyright (c) 2021 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
   litepub create [<dir>] [-s, --skeleton] [-q, --quiet]
@@ -28,4 +21,4 @@ Options:
   -q, --quiet        Show only errors
   -h, --help         Show this screen
   -v, --version      Show version
-```
+`

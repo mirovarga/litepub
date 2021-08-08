@@ -15,52 +15,52 @@ databases. All it needs is one binary, posts written in
 render the posts to static HTML files.
 
 Posts don't have to include any special metadata (aka front matter) like title
-or date in them - the title, date and optional tags are parsed from
-the natural flow of the posts.
+or date in them - the title, date and optional tags are parsed from the natural
+flow of the posts.
 
 ## Quick Start
 
 To create a sample blog follow these steps:
 
 1. Download a [release](https://github.com/mirovarga/litepub/releases) and
-unpack it to a directory.
+   unpack it to a directory.
 
 2. `cd` to the directory.
 
 3. Create a sample blog:
 
-  	```
-  	$ ./litepub create
-  	```
+   ```
+   $ ./litepub create
+   ```
 
 4. Build the blog:
 
-	```
-	$ ./litepub build
-    Generating: index.html
-    Generating: tags/reference.html
-    Generating: tags/tutorial.html
-    Generating: tags/advanced.html
-    Generating: tags/docs.html
-    Generating: tags/basics.html
-    Generating: overview.html
-    Generating: quick-start.html
-    Generating: installation.html
-    Generating: creating-a-blog.html
-    Generating: creating-posts.html
-    Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
-    Generating: serving-a-blog.html
-    Generating: templates.html
-    Generating: getting-help.html
-    ```
+   ```
+   $ ./litepub build
+   Generating: index.html
+   Generating: tags/reference.html
+   Generating: tags/tutorial.html
+   Generating: tags/advanced.html
+   Generating: tags/docs.html
+   Generating: tags/basics.html
+   Generating: overview.html
+   Generating: quick-start.html
+   Generating: installation.html
+   Generating: creating-a-blog.html
+   Generating: creating-posts.html
+   Generating: generating-html-files-for-a-blog-aka-building-a-blog.html
+   Generating: serving-a-blog.html
+   Generating: templates.html
+   Generating: getting-help.html
+   ```
 
 5. Run the built-in server:
 
-	```
-	$ ./litepub serve
-	Running on http://localhost:2703
-	Ctrl+C to quit
-	```
+   ```
+   $ ./litepub serve
+   Running on http://localhost:2703
+   Ctrl+C to quit
+   ```
 
 6. Open [http://localhost:2703](http://localhost:2703) in your browser.
 
@@ -88,8 +88,8 @@ If you don't need the sample templates and posts use the `--skeleton` option:
 $ litepub create --skeleton
 ```
 
-> Because the template files are required they will be still created but with no
-content.
+> Because the template files are required they will be still created but with
+> no content.
 
 #### Directory Structure
 
@@ -128,26 +128,23 @@ file in the `posts` directory. The file name and extension aren't important,
 only the content of the file.
 
 > All posts need to be stored directly in the `posts` directory. In other words,
-subdirectories in the `posts` directory are ignored when looking for posts.
+> subdirectories in the `posts` directory are ignored when looking for posts.
 
 Each post looks like this (it's the start of an
 [actual post](http://www.mirovarga.com/how-i-switched-from-java-to-javascript.html)
 from my blog):
 
 ```markdown
-1 # How I Switched from Java to JavaScript
-2
-3 *Jan 25, 2015*
-4
-5 *Java, JavaScript*
-6
-7 I know that there are lots of posts about why JavaScript, or more specifically
-8 Node.js, is better than Java but nevertheless I wanted to contribute, too.
-9 ...
+1 # How I Switched from Java to JavaScript 2 3 *Jan 25, 2015*
+4 5 *Java, JavaScript*
+6 7 I know that there are lots of posts about why JavaScript, or more
+specifically 8 Node.js, is better than Java but nevertheless I wanted to
+contribute, too. 9 ...
 ```
 
 - Line `1` is the post's title. If it starts with one or more `#`s they are
-stripped. So in this case the title becomes *How I Switched from Java to JavaScript*.
+  stripped. So in this case the title becomes *How I Switched from Java to
+  JavaScript*.
 - Line `3` is the post's date. It has to be in the `*MMM d, YYYY*` format.
 - Line `5` are comma separated post tags.
 - Anything below line `6` is the content of the post.
@@ -157,7 +154,8 @@ stripped. So in this case the title becomes *How I Switched from Java to JavaScr
 #### Draft Posts
 
 Any post can be marked as draft by simply moving it to the `draft` subdirectory
-of the `posts` directory. To unmark it just move it back to the `posts` directory.
+of the `posts` directory. To unmark it just move it back to the `posts`
+directory.
 
 > Deleting a post is analogous to drafting: just remove it from the `posts`
 directory.
@@ -186,17 +184,18 @@ Generating: templates.html
 Generating: getting-help.html
 ```
 
-> The draft posts are ignored when building a blog.
+> The draft posts and posts starting with a dot (`.`) are ignored when building
+> a blog.
 
 LitePub takes the `*.tmpl` files from the `templates` directory, applies them to
 posts stored in the `posts` directory and generates the HTML files to the `www`
 directory. It also copies all accompanying files (and directories) from
 the `templates` directory to the `www` directory.
 
-> The generated HTML file names are created by slugifying the post title (or
-the tag name when generating tag pages) and adding the `html` extension. For
-example, a post with the *How I Switched from Java to JavaScript* title is
-generated to the `how-i-switched-from-java-to-javascript.html` file.
+> The generated HTML file names are created by slugifying the post title
+> (or the tag name when generating tag pages) and adding the `html` extension.
+> For example, a post with the *How I Switched from Java to JavaScript* title is
+> generated to the `how-i-switched-from-java-to-javascript.html` file.
 
 #### The **build** Command Reference
 
@@ -214,8 +213,8 @@ Options:
 
 ### Serving a Blog
 
-LitePub has a built-in server so you can see how a generated blog looks like
-in a browser. `cd` to the blog's directory and start the server:
+LitePub has a built-in server so you can see how a generated blog looks like in
+a browser. `cd` to the blog's directory and start the server:
 
 ```
 $ litepub serve
@@ -225,8 +224,6 @@ Ctrl+C to quit
 
 Now open [http://localhost:2703](http://localhost:2703) in your browser to see
 the generated blog.
-
-> Note that the server ignores the draft posts.
 
 #### Serving a Blog on a Different Port
 
@@ -253,13 +250,13 @@ Ctrl+C to quit
 ```
 
 > Note that subdirectories in the `posts` and `templates` directories aren't
-watched.
+> watched.
 
 #### Rebuilding a Blog Before Serving
 
 Sometimes it can be useful to rebuild a blog before serving it, for example when
-you don't remember if you made any changes to posts or templates. To rebuild
-a blog before serving use the `--rebuild` option:
+you don't remember if you made any changes to posts or templates. To rebuild a
+blog before serving use the `--rebuild` option:
 
 ```
 $ litepub serve --rebuild
@@ -308,8 +305,8 @@ LitePub uses the Go [html/template](https://golang.org/pkg/html/template/)
 package to define the templates.
 
 > Design changes require no knowledge of Go templates. However changes that
-affect what data is displayed will require it less or more (depending on
-the change).
+> affect what data is displayed will require it less or more (depending on
+> the change).
 
 #### Structure
 
@@ -324,7 +321,7 @@ templates/      # the templates and accompanying files (html, css, js, png, etc.
 ```
 
 - `layout.tmpl` defines the common layout for the home page (`index.tmpl`), post
-   pages (`post.tmpl`) and tag pages (`tag.tmpl`)
+  pages (`post.tmpl`) and tag pages (`tag.tmpl`)
 - `index.tmpl` is used when generating the home page (`index.html`)
 - `post.tmpl` is used when generating post pages
 - and `tag.tmpl` is used when generating tag pages
@@ -333,7 +330,7 @@ Besides the four files there can be any number of `html`, `css`, `js`, `png`,
 etc. files that are used by the `.tmpl` files.
 
 > If you're not familiar with Go templates, some things in the next sections can
-be unclear.
+> be unclear.
 
 #### Data
 
@@ -351,7 +348,7 @@ A `Post` has the following properties:
 - `Draft` - `true` if the post is a draft
 
 > To get a post's page URL in a template use the `slug` function (described
-below) like this: `<a href="/{{.Title | slug}}.html">A Post</a>`.
+> below) like this: `<a href="/{{.Title | slug}}.html">A Post</a>`.
 
 ##### Tags
 
@@ -362,7 +359,7 @@ A `Tag` has the following properties:
   in descending order
 
 > To get a tag's page URL in a template use the `slug` function (described
-below) like this: `<a href="/tags/{{.Name | slug}}.html">A Tag</a>`.
+> below) like this: `<a href="/tags/{{.Name | slug}}.html">A Tag</a>`.
 
 The `index.tmpl` template has access to an array of `Post`s sorted by `Written`
 in descending order. The `post.tmpl` template has access to the `Post` it
@@ -370,8 +367,8 @@ displays. The `tag.tmpl` template has access to the `Tag` it displays.
 
 #### Functions
 
-The `index.tmpl`, `post.tmpl` and `tag.tmpl` templates have access to
-the following functions:
+The `index.tmpl`, `post.tmpl` and `tag.tmpl` templates have access to the
+following functions:
 
 ##### html
 
@@ -397,7 +394,7 @@ Increments an integer by one, for example
 Slugifies a string, for example `<a href="/{{.Title | slug}}.html">A Post</a>`.
 
 > The available functions represent my needs when converting my handmade blog
-to a generated one.
+> to a generated one.
 
 ### Getting Help
 
@@ -405,8 +402,8 @@ To see all available commands and their options use the `--help` option:
 
 ```
 $ litepub --help
-LitePub 0.5.3 [github.com/mirovarga/litepub]
-Copyright (c) 2018 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
+LitePub 0.5.4 [github.com/mirovarga/litepub]
+Copyright (c) 2021 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
   litepub create [<dir>] [-s, --skeleton] [-q, --quiet]

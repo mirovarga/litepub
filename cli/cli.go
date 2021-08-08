@@ -1,8 +1,7 @@
-package main
+package cli
 
 import (
 	"fmt"
-	"path/filepath"
 
 	"github.com/docopt/docopt-go"
 )
@@ -15,8 +14,8 @@ const (
 
 var log quietableLog
 
-func main() {
-	arguments, _ := docopt.Parse(usage, nil, true, "LitePub 0.5.3", false)
+func Run() int {
+	arguments, _ := docopt.ParseArgs(usage, nil, "LitePub 0.5.4")
 
 	log = quietableLog{arguments["--quiet"].(int) == 1}
 
@@ -25,22 +24,14 @@ func main() {
 	}
 
 	if arguments["create"].(bool) {
-		create(arguments)
+		return create(arguments)
 	} else if arguments["build"].(bool) {
-		build(arguments)
+		return build(arguments)
 	} else if arguments["serve"].(bool) {
-		serve(arguments)
+		return serve(arguments)
 	}
-}
 
-func repoDir(dir string) string {
-	dirs := filepath.SplitList(dir)
-	return filepath.Join(dirs[:len(dirs)-1]...)
-}
-
-func blogID(dir string) string {
-	dirs := filepath.SplitList(dir)
-	return dirs[len(dirs)-1]
+	return 0
 }
 
 type quietableLog struct {

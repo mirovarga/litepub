@@ -16,8 +16,7 @@ If you don't need the sample templates and posts use the `--skeleton` option:
 $ litepub create --skeleton
 ```
 
-> Because the template files are required they will be still created but with no
-content.
+> Because the template files are required they will be still created but with no content.
 
 ## Directory Structure
 

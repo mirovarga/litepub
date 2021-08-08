@@ -33,10 +33,7 @@ posts stored in the `posts` directory and generates the HTML files to the `www`
 directory. It also copies all accompanying files (and directories) from
 the `templates` directory to the `www` directory.
 
-> The generated HTML file names are created by slugifying the post title (or
-the tag name when generating tag pages) and adding the `html` extension. For
-example, a post with the *How I Switched from Java to JavaScript* title is
-generated to the `how-i-switched-from-java-to-javascript.html` file.
+> The generated HTML file names are created by slugifying the post title (or the tag name when generating tag pages) and adding the `html` extension. For example, a post with the *How I Switched from Java to JavaScript* title is generated to the `how-i-switched-from-java-to-javascript.html` file.
 
 ## The **build** Command Reference
 
