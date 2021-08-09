@@ -8,7 +8,7 @@ To see all available commands and their options use the `--help` option:
 
 ```
 $ litepub --help
-LitePub 0.5.4 [github.com/mirovarga/litepub]
+LitePub 0.5.5 [github.com/mirovarga/litepub]
 Copyright (c) 2021 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:

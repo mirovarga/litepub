@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"mirovarga.com/litepub/lib"
 )
 
 //go:embed sample
@@ -16,25 +18,24 @@ var templates = []string{"layout.tmpl", "index.tmpl", "post.tmpl", "tag.tmpl"}
 func create(arguments map[string]interface{}) int {
 	dir := arguments["<dir>"].(string)
 
-	err := os.MkdirAll(dir, 0700)
-	if err != nil {
-		log.Errorf("Failed to create blog: %s\n", err)
-		return -1
-	}
+	lib.NewMarkdownBlog(dir)
 
 	if arguments["--skeleton"].(int) == 1 {
+		// TODO here we should call something like lib.NewStaticBlogGenerator(dir)
+		// with this branch's functionality and execute the else branch when
+		// --skeleton == 0
 		tmplDir := filepath.Join(dir, templatesDir)
 		err := os.MkdirAll(tmplDir, 0700)
 		if err != nil {
 			log.Errorf("Failed to create blog: %s\n", err)
-			return -1
+			return 1
 		}
 
 		for _, template := range templates {
 			err := os.WriteFile(filepath.Join(tmplDir, template), nil, 0600)
 			if err != nil {
 				log.Errorf("Failed to create blog: %s\n", err)
-				return -1
+				return 1
 			}
 		}
 	} else {
@@ -56,7 +57,7 @@ func create(arguments map[string]interface{}) int {
 		})
 		if err != nil {
 			log.Errorf("Failed to create blog: %s\n", err)
-			return -1
+			return 1
 		}
 	}
 

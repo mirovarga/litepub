@@ -43,11 +43,12 @@ type MarkdownBlog struct {
 	dir string
 }
 
-// NewMarkdownBlog creates a MarkdownBlog in the provided directory. If
-// the directory doesn't exist it creates it.
+// NewMarkdownBlog creates a MarkdownBlog in the provided directory.
+//
+// If the directory doesn't exist it creates it.
 func NewMarkdownBlog(dir string) MarkdownBlog {
 	if _, err := os.Stat(dir); err != nil {
-		os.MkdirAll(dir, 0700)
+		os.MkdirAll(filepath.Join(dir, postsDir, draftDir), 0700)
 	}
 	return MarkdownBlog{dir}
 }
