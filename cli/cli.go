@@ -15,7 +15,7 @@ const (
 var log quietableLog
 
 func Run() int {
-	arguments, _ := docopt.ParseArgs(usage, nil, "LitePub 0.5.5")
+	arguments, _ := docopt.ParseArgs(usage, nil, "LitePub 0.5.6")
 
 	log = quietableLog{arguments["--quiet"].(int) == 1}
 

@@ -109,9 +109,15 @@ func readPost(path string) (Post, error) {
 		return Post{}, fmt.Errorf("failed to read post: %s", err)
 	}
 
-	paras := strings.Split(string(markdown), "\n\n")
+	return markdownToPost(string(markdown))
+}
+
+func markdownToPost(markdown string) (Post, error) {
+	md := strings.ReplaceAll(markdown, "\r\n", "\n")
+
+	paras := strings.Split(md, "\n\n")
 	if len(paras) < 3 {
-		return Post{}, fmt.Errorf("title, date or content is missing: %s", path)
+		return Post{}, fmt.Errorf("title, date or content is missing")
 	}
 
 	title := strings.TrimSpace(strings.Replace(paras[0], "#", "", -1))
