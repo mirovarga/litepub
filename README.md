@@ -135,11 +135,15 @@ Each post looks like this (it's the start of an
 from my blog):
 
 ```markdown
-1 # How I Switched from Java to JavaScript 2 3 *Jan 25, 2015*
-4 5 *Java, JavaScript*
-6 7 I know that there are lots of posts about why JavaScript, or more
-specifically 8 Node.js, is better than Java but nevertheless I wanted to
-contribute, too. 9 ...
+1 # How I Switched from Java to JavaScript
+2
+3 *Jan 25, 2015*
+4
+5 *Java, JavaScript*
+6
+7 I know that there are lots of posts about why JavaScript, or more specifically
+8 Node.js, is better than Java but nevertheless I wanted to contribute, too.
+9 ...
 ```
 
 - Line `1` is the post's title. If it starts with one or more `#`s they are
