@@ -1,7 +1,8 @@
 LINUX_OS = linux
 WIN_OS = windows
 DARWIN_OS = darwin
-ARCH = amd64
+ARCH_AMD = amd64
+ARCH_ARM = arm64
 
 DIST_DIR = _dist
 LINUX_DIR = $(DIST_DIR)/$(LINUX_OS)
@@ -22,20 +23,20 @@ install: clean
 dist: clean
 	@echo "Building Linux distribution"
 	@mkdir -p $(LINUX_DIR)
-	@GOOS=$(LINUX_OS) GOARCH=$(ARCH) go build -o $(LINUX_DIR)/$(BIN_FILE)
-	@zip -qj9 $(DIST_DIR)/$(BIN_FILE)-$(VERSION)-$(LINUX_OS)-$(ARCH).zip $(LINUX_DIR)/$(BIN_FILE) $(OTHER_FILES)
+	@GOOS=$(LINUX_OS) GOARCH=$(ARCH_AMD) go build -o $(LINUX_DIR)/$(BIN_FILE)
+	@zip -qj9 $(DIST_DIR)/$(BIN_FILE)-$(VERSION)-$(LINUX_OS)-$(ARCH_AMD).zip $(LINUX_DIR)/$(BIN_FILE) $(OTHER_FILES)
 	@rm -rf $(LINUX_DIR)
 
 	@echo "Building Windows distribution"
 	@mkdir -p $(WIN_DIR)
-	@GOOS=$(WIN_OS) GOARCH=$(ARCH) go build -o $(WIN_DIR)/$(BIN_FILE).exe
-	@zip -qj9 $(DIST_DIR)/$(BIN_FILE)-$(VERSION)-$(WIN_OS)-$(ARCH).zip $(WIN_DIR)/$(BIN_FILE).exe $(OTHER_FILES)
+	@GOOS=$(WIN_OS) GOARCH=$(ARCH_AMD) go build -o $(WIN_DIR)/$(BIN_FILE).exe
+	@zip -qj9 $(DIST_DIR)/$(BIN_FILE)-$(VERSION)-$(WIN_OS)-$(ARCH_AMD).zip $(WIN_DIR)/$(BIN_FILE).exe $(OTHER_FILES)
 	@rm -rf $(WIN_DIR)
 
 	@echo "Building Darwin distribution"
 	@mkdir -p $(DARWIN_DIR)
-	@GOOS=$(DARWIN_OS) GOARCH=$(ARCH) go build -o $(DARWIN_DIR)/$(BIN_FILE)
-	@zip -qj9 $(DIST_DIR)/$(BIN_FILE)-$(VERSION)-$(DARWIN_OS)-$(ARCH).zip $(DARWIN_DIR)/$(BIN_FILE) $(OTHER_FILES)
+	@GOOS=$(DARWIN_OS) GOARCH=$(ARCH_ARM) go build -o $(DARWIN_DIR)/$(BIN_FILE)
+	@zip -qj9 $(DIST_DIR)/$(BIN_FILE)-$(VERSION)-$(DARWIN_OS)-$(ARCH_ARM).zip $(DARWIN_DIR)/$(BIN_FILE) $(OTHER_FILES)
 	@rm -rf $(DARWIN_DIR)
 
 clean:
