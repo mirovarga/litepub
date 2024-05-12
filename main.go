@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"mirovarga.com/litepub/cli"
+	"github.com/mirovarga/litepub/cli"
 )
 
 func main() {

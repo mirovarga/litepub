@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"mirovarga.com/litepub/lib"
+	"github.com/mirovarga/litepub/lib"
 )
 
 //go:embed sample

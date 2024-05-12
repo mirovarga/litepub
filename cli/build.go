@@ -3,7 +3,7 @@ package cli
 import (
 	"path/filepath"
 
-	"mirovarga.com/litepub/lib"
+	"github.com/mirovarga/litepub/lib"
 )
 
 func build(arguments map[string]interface{}) int {
