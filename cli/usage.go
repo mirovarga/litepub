@@ -2,7 +2,7 @@ package cli
 
 const usage = `
 LitePub 0.5.7 [github.com/mirovarga/litepub]
-Copyright (c) 2024 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
+Copyright (c) 2024 Miro Varga [mirovarga.com]
 
 Usage:
   litepub create [<dir>] [-s, --skeleton] [-q, --quiet]
