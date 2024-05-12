@@ -14,6 +14,7 @@ const (
 
 var log quietableLog
 
+// TODO pass args (also check for other ways to decouple things)
 func Run() int {
 	arguments, _ := docopt.ParseArgs(usage, nil, "LitePub 0.5.6")
 

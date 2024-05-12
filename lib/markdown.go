@@ -21,24 +21,24 @@ const (
 //
 // So the structure looks like this:
 //
-// blog/
-//   posts/
-//     draft/
-//       draft1.md
-//       ...
-//     post1.md
-//     post2.md
-//     ...
+//	blog/
+//	  posts/
+//	    draft/
+//	      draft1.md
+//	      ...
+//	    post1.md
+//	    post2.md
+//	    ...
 //
 // Markdown files have the following format:
 //
-// # Title
+//	# Title
 //
-// *Jan 2, 2009*
+//	*Jan 2, 2009*
 //
-// *tag1, tag2, ...*
+//	*tag1, tag2, ...*
 //
-// Content
+//	Content
 type MarkdownBlog struct {
 	dir string
 }
@@ -90,6 +90,7 @@ func readPosts(dir string) ([]Post, error) {
 
 	var posts []Post
 	for _, postFile := range postFiles {
+		// TODO dirs/files starting with '.' or '_' are drafts
 		if postFile.IsDir() || strings.HasPrefix(postFile.Name(), ".") {
 			continue
 		}
