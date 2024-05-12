@@ -29,14 +29,14 @@ To create a sample blog follow these steps:
 
 3. Create a sample blog:
 
-   ```
-   $ ./litepub create
+   ```shell
+   ./litepub create
    ```
 
 4. Build the blog:
 
-   ```
-   $ ./litepub build
+   ```shell
+   ./litepub build
    Generating: index.html
    Generating: tags/reference.html
    Generating: tags/tutorial.html
@@ -56,8 +56,8 @@ To create a sample blog follow these steps:
 
 5. Run the built-in server:
 
-   ```
-   $ ./litepub serve
+   ```shell
+   ./litepub serve
    Running on http://localhost:2703
    Ctrl+C to quit
    ```
@@ -68,8 +68,16 @@ To create a sample blog follow these steps:
 
 ### Installation
 
+#### Via the `go install` command
+
+```shell
+go install github.com/mirovarga/litepub@latest
+```
+
+#### Manually
+
 Download a [release](https://github.com/mirovarga/litepub/releases) and unpack
-it to a directory. That's all.
+it to a directory.
 
 > You can optionally add the directory to the `PATH` so you can run `litepub`
 from any directory. All examples assume you have `litepub` in your `PATH`.
@@ -78,14 +86,14 @@ from any directory. All examples assume you have `litepub` in your `PATH`.
 
 The following will create a sample blog in the current directory:
 
-```
-$ litepub create
+```shell
+litepub create
 ```
 
 If you don't need the sample templates and posts use the `--skeleton` option:
 
-```
-$ litepub create --skeleton
+```shell
+litepub create --skeleton
 ```
 
 > Because the template files are required they will be still created but with
@@ -95,7 +103,7 @@ $ litepub create --skeleton
 
 Each blog is stored in a directory with the following structure:
 
-```bash
+```shell
 posts/          # the posts
   draft/        # the draft posts (they are ignored when building the blog)
 templates/      # the templates and accompanying files (html, css, js, png, etc.)
@@ -169,8 +177,8 @@ directory.
 To generate the HTML files for a blog `cd` to the blog's directory and use the
 `build` command:
 
-```
-$ litepub build
+```shell
+litepub build
 Generating: index.html
 Generating: tags/reference.html
 Generating: tags/tutorial.html
@@ -220,8 +228,8 @@ Options:
 LitePub has a built-in server so you can see how a generated blog looks like in
 a browser. `cd` to the blog's directory and start the server:
 
-```
-$ litepub serve
+```shell
+litepub serve
 Running on http://localhost:2703
 Ctrl+C to quit
 ```
@@ -234,8 +242,8 @@ the generated blog.
 When starting the server you can specify a port on which to listen with the
 `--port` option:
 
-```
-$ litepub serve --port 3000
+```shell
+litepub serve --port 3000
 Running on http://localhost:3000
 Ctrl+C to quit
 ```
@@ -246,8 +254,8 @@ When creating templates or even writing posts it's quite useful to be able to
 immediately see the changes after refreshing the page. To tell LitePub that it
 should watch for changes to posts and templates use the `--watch` option:
 
-```
-$ litepub serve --watch
+```shell
+litepub serve --watch
 Running on http://localhost:2703
 Rebuilding when posts or templates change
 Ctrl+C to quit
@@ -262,8 +270,8 @@ Sometimes it can be useful to rebuild a blog before serving it, for example when
 you don't remember if you made any changes to posts or templates. To rebuild a
 blog before serving use the `--rebuild` option:
 
-```
-$ litepub serve --rebuild
+```shell
+litepub serve --rebuild
 Generating: index.html
 Generating: tags/reference.html
 Generating: tags/tutorial.html
@@ -316,7 +324,7 @@ package to define the templates.
 
 There are four required files in the `templates` directory:
 
-```bash
+```shell
 templates/      # the templates and accompanying files (html, css, js, png, etc.)
   layout.tmpl
   index.tmpl
@@ -404,10 +412,10 @@ Slugifies a string, for example `<a href="/{{.Title | slug}}.html">A Post</a>`.
 
 To see all available commands and their options use the `--help` option:
 
-```
-$ litepub --help
+```shell
+litepub --help
 LitePub 0.5.7 [github.com/mirovarga/litepub]
-Copyright (c) 2021 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
+Copyright (c) 2024 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
   litepub create [<dir>] [-s, --skeleton] [-q, --quiet]
