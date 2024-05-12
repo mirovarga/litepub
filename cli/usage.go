@@ -1,7 +1,7 @@
 package cli
 
 const usage = `
-LitePub 0.5.6 [github.com/mirovarga/litepub]
+LitePub 0.5.7 [github.com/mirovarga/litepub]
 Copyright (c) 2021 Miro Varga [mirovarga.com, hello@mirovarga.com, @mirovarga]
 
 Usage:
